@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% load humanize %} 
+{% load extra %} 
+
+{% block body %}
+
+<div class="container">
+<!--   <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#first">First</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#second">Second</a>
+    </li>
+  </ul> -->
+  <div class="tab-content">
+    <!-- <div class="tab-pane container" id="second"> -->
+
+         <div class="row">
+          <div class="col">
+              SYMBOL
+          </div>
+          <div class="col">
+              ACTION
+          </div>
+          <div class="col">
+              SHARES(MAX)
+          </div>
+          <div class="col">
+              SHARES(MIN)
+          </div>
+          <div class="col">
+              DISCOUNT
+          </div>
+          <div class="col">
+              TYPE
+          </div>
+          <div class="col ma-type d-none">
+              MA TYPE
+          </div>
+          <div class="col">
+              MIN PRICE
+          </div>
+          <div class="col">
+              DURATION
+          </div>
+         </div>
+
+        <form method="post">
+         <div class="row">
+          {% csrf_token %}
+          <div class="col">
+              <input type="text" class="form-control" name="symbol" value="WXYZ.R">
+          </div>
+          <div class="col">
+              SELL
+              <input type="hidden" name="action" value="SELL">
+          </div>
+          <div class="col">
+              <input type="text" name="shares_max" value='10000' class="form-control" required="">
+          </div>
+          <div class="col">
+              <input type="text" name="shares_min" value='5000' class="form-control" required="">
+          </div>
+          <div class="col">
+              <select class="form-control" name="discount">
+                {% for ii in range_discount %}
+                  <option value="{{ ii }}">{{ ii }}%</option>
+                {% endfor %}
+              </select>
+          </div>
+          <div class="col">
+            <select class="form-control ft-type" name="ft_type">
+              <option value="FTS">FTS</option>
+              <option value="MA">MA</option>
+            </select>
+          </div>
+          <div class="col ma-type d-none">
+            <select class="form-control" name="ma_type">
+              <option value="10D">10D</option>
+              <option value="30D">30D</option>
+            </select>
+          </div>
+          <div class="col">
+            <select class="form-control" name="min_price">
+              <option value="NO MIN">NO MIN</option>
+            </select>
+          </div>
+          <div class="col">
+            <select class="form-control" name="duration">
+              <option value="DAY">DAY</option>
+              <option value="GTC">GTC</option>
+            </select>
+          </div>
+         </div>
+
+         <div class="row mt-5">
+           <div class="col-md-3">
+            <input type="submit" value="Submit" class="btn btn-success">
+           </div>
+
+           <div class="col-md-3">
+            ACCEPT COUNTER BIDS?
+           </div>
+
+           <div class="col-md-1">
+            <label class="radio-inline"><input type="radio" name="accept_counter_bids" checked="" value="true">YES</label>            
+           </div>
+
+           <div class="col-md-1">
+            <label class="radio-inline"><input type="radio" name="accept_counter_bids" value="false">NO</label>
+           </div>
+         </div>
+         <div class="row">
+           <div class="offset-md-3 col-md-3">
+            ACCEPT PRIVATE COUNTER OFFER?
+           </div>
+
+           <div class="col-md-1">
+            <label class="radio-inline"><input type="radio" name="accept_private_counter_offer" checked="" value="true">YES</label>            
+           </div>
+
+           <div class="col-md-1">
+            <label class="radio-inline"><input type="radio" name="accept_private_counter_offer" value="false">NO</label>            
+           </div>
+         </div>
+         </form>
+
+         <div class="row mt-4">
+            <h5>FREE TRADING QUOTE</h5>
+         </div>
+         <div class="row">
+           <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>SYMBOL</th>
+                  <th>LAST</th>
+                  <th>CHANGE</th>
+                  <th>BID</th>
+                  <th>ASK</th>
+                  <th>HIGH</th>
+                  <th>LOW</th>
+                  <th>VOLUME</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for ii in inputs %}
+                <tr>
+                  <td>{{ ii.symbol }}</td>
+                  <td>{{ ii.last }}</td>
+                  <td>{{ ii|percent_change }}</td>
+                  <td>{{ ii.bid }}</td>
+                  <td>{{ ii.ask }}</td>
+                  <td>{{ ii.high }}</td>
+                  <td>{{ ii.low }}</td>
+                  <td>{{ ii.volume|intcomma }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+           </div>          
+         </div>
+  </div>
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+  $('.ft-type').change(function() {
+    var ft_type = $(this).val();
+    console.log(ft_type);
+
+    if (ft_type == 'MA') {
+      $('.ma-type').removeClass('d-none');
+    } else {
+      $('.ma-type').addClass('d-none');
+    }
+  });
+  
+</script>
+{% endblock %}
