@@ -40,12 +40,12 @@ class StockOutput(models.Model):
     shares_min = models.IntegerField()
     discount = models.IntegerField()
     ft_type = models.CharField(max_length=50, choices=FT_TYPE)
-    ma_type = models.CharField(max_length=50, choices=MA_TYPE)
+    ma_type = models.CharField(max_length=50, choices=MA_TYPE, null=True, blank=True)
     min_price = models.FloatField()
     duration = models.CharField(max_length=50, choices=DURATION)
     accept_counter_bids = models.BooleanField()
     accept_private_counter_offer = models.BooleanField()
-    timestamp = models.CharField(max_length=50)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return '{} - {}'.format(self.symbol, self.action) 

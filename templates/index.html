@@ -4,7 +4,11 @@
 
 <div class="container">
   <div class="tab-content">
-         <div class="row">
+
+         <div class="row mt-3">
+            <h4>Issuer - Offer Shares</h4>
+         </div>
+         <div class="row mt-3">
           <div class="col">
               SYMBOL
           </div>
@@ -23,7 +27,7 @@
           <div class="col">
               TYPE
           </div>
-          <div class="col ma-type {% if form.ft_type.value != 'MA' %} d-none {% endif %}">
+          <div class="col">
               MA TYPE
           </div>
           <div class="col">
@@ -63,8 +67,8 @@
               <option value="MA" {% if form.ft_type.value == 'MA' %} selected="" {% endif %}>MA</option>
             </select>
           </div>
-          <div class="col ma-type {% if form.ft_type.value != 'MA' %} d-none {% endif %}">
-            <select class="form-control" name="ma_type">
+          <div class="col">
+            <select class="form-control ma-type" name="ma_type" {% if form.ft_type.value != 'MA' %} disabled="" {% endif %}>
               <option value="10D" {% if form.ma_type.value == '10D' %} selected="" {% endif %}>10D</option>
               <option value="30D" {% if form.ma_type.value == '30D' %} selected="" {% endif %}>30D</option>
             </select>
@@ -96,7 +100,7 @@
            <div class="col-md-1">
             <label class="radio-inline"><input type="radio" name="accept_counter_bids" {% if not form.accept_counter_bids.value %} checked="" {% endif %} value="false">NO</label>
            </div>
-           <div class="col-md-1">
+<!--            <div class="col-md-1">
             TIME
            </div>
            <div class="col-md-3 form-group">
@@ -107,7 +111,7 @@
               </span>            
             </div>
            </div>
-         </div>
+ -->         </div>
          <div class="row">
            <div class="offset-md-3 col-md-3">
             ACCEPT PRIVATE COUNTER OFFER?
@@ -158,9 +162,9 @@
     console.log(ft_type);
 
     if (ft_type == 'MA') {
-      $('.ma-type').removeClass('d-none');
+      $('.ma-type').removeAttr('disabled');
     } else {
-      $('.ma-type').addClass('d-none');
+      $('.ma-type').attr('disabled', true);
     }
   });
 
@@ -182,8 +186,8 @@
       });
   });
 
-  $(function () {
-    $('.date').datetimepicker();
-  });  
+  // $(function () {
+  //   $('.date').datetimepicker();
+  // });  
 </script>
 {% endblock %}
