@@ -11,11 +11,11 @@ from general.forms import *
 def home(request):
     if request.method == 'POST':
         form = OutputForm(request.POST)
-        symbol = form.cleaned_data['symbol']
-        inputs = StockInput.objects.filter(symbol=symbol)
 
         if form.is_valid():
             form.save()
+            symbol = form.cleaned_data['symbol']
+            inputs = StockInput.objects.filter(symbol=symbol)
     else:
         form = OutputForm()
         inputs = StockInput.objects.all()
