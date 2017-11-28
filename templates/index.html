@@ -1,6 +1,4 @@
 {% extends 'base.html' %}
-{% load humanize %} 
-{% load extra %} 
 
 {% block body %}
 
@@ -40,7 +38,7 @@
          <div class="row">
           {% csrf_token %}
           <div class="col">
-              <input type="text" class="form-control" name="symbol" value="{% if form.symbol.value %}{{ form.symbol.value }}{% endif %}" required="">
+              <input type="text" class="form-control input_symbol" name="symbol" value="{% if form.symbol.value %}{{ form.symbol.value }}{% endif %}" required="">
           </div>
           <div class="col">
               SELL
@@ -84,7 +82,7 @@
 
          <div class="row mt-5">
            <div class="col-md-3">
-            <input type="submit" value="Submit" class="btn btn-success">
+            <input type="submit" value="Submit" class="btn btn-success btn-submit" disabled>
            </div>
 
            <div class="col-md-3">
@@ -143,19 +141,8 @@
                   <th>VOLUME</th>
                 </tr>
               </thead>
-              <tbody>
-                {% for ii in inputs %}
-                <tr>
-                  <td>{{ ii.symbol }}</td>
-                  <td>{{ ii.last }}</td>
-                  <td>{{ ii|percent_change }}</td>
-                  <td>{{ ii.bid }}</td>
-                  <td>{{ ii.ask }}</td>
-                  <td>{{ ii.high }}</td>
-                  <td>{{ ii.low }}</td>
-                  <td>{{ ii.volume|intcomma }}</td>
-                </tr>
-                {% endfor %}
+              <tbody class="input_body">
+                {% include '_input.html' %}
               </tbody>
             </table>
            </div>          
@@ -175,6 +162,24 @@
     } else {
       $('.ma-type').addClass('d-none');
     }
+  });
+
+  $('.input_symbol').keyup(function() {
+    jQuery.ajax({
+        type: 'get',
+        url: '/get_input_body',
+        data: {
+            symbol: $('.input_symbol').val()
+        },
+        success: function(res) {
+            jQuery('.input_body').html(res.html);
+            if (res.can_submit) {
+              $('.btn-submit').removeAttr('disabled');
+            } else {
+              $('.btn-submit').attr('disabled', true);
+            }
+        }
+      });
   });
 
   $(function () {

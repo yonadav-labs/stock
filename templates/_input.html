@@ -1,0 +1,21 @@
+{% load humanize %} 
+{% load extra %} 
+
+{% if inputs %}
+  {% for ii in inputs %}
+    <tr>
+      <td>{{ ii.symbol }}</td>
+      <td>{{ ii.last }}</td>
+      <td>{{ ii|percent_change }}</td>
+      <td>{{ ii.bid }}</td>
+      <td>{{ ii.ask }}</td>
+      <td>{{ ii.high }}</td>
+      <td>{{ ii.low }}</td>
+      <td>{{ ii.volume|intcomma }}</td>
+    </tr>
+  {% endfor %}
+{% else %}
+  <tr>
+    <td colspan="8">Symbol not found</td>
+  </tr>
+{% endif %}
