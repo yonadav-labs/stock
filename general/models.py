@@ -28,10 +28,6 @@ MA_TYPE = (
     ('30D', '30D'),
 )
 
-MIN_PRICE = (
-    ('NO MIN', 'NO MIN'),
-)
-
 DURATION = (
     ('DAY', 'DAY'),
     ('GTC', 'GTC'),
@@ -45,10 +41,11 @@ class StockOutput(models.Model):
     discount = models.IntegerField()
     ft_type = models.CharField(max_length=50, choices=FT_TYPE)
     ma_type = models.CharField(max_length=50, choices=MA_TYPE)
-    min_price = models.CharField(max_length=50, choices=MIN_PRICE)
+    min_price = models.FloatField()
     duration = models.CharField(max_length=50, choices=DURATION)
     accept_counter_bids = models.BooleanField()
     accept_private_counter_offer = models.BooleanField()
+    timestamp = models.CharField(max_length=50)
 
     def __str__(self):
         return '{} - {}'.format(self.symbol, self.action) 
