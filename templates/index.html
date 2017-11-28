@@ -35,7 +35,7 @@
           <div class="col">
               TYPE
           </div>
-          <div class="col ma-type d-none">
+          <div class="col ma-type {% if form.ft_type.value != 'MA' %} d-none {% endif %}">
               MA TYPE
           </div>
           <div class="col">
@@ -50,44 +50,44 @@
          <div class="row">
           {% csrf_token %}
           <div class="col">
-              <input type="text" class="form-control" name="symbol" value="" required="">
+              <input type="text" class="form-control" name="symbol" value="{{ form.symbol.value }}" required="">
           </div>
           <div class="col">
               SELL
               <input type="hidden" name="action" value="SELL">
           </div>
           <div class="col">
-              <input type="text" name="shares_max" value='10000' class="form-control" required="">
+              <input type="text" name="shares_max" value='{{ form.shares_max.value }}' class="form-control" required="">
           </div>
           <div class="col">
-              <input type="text" name="shares_min" value='5000' class="form-control" required="">
+              <input type="text" name="shares_min" value='{{ form.shares_min.value }}' class="form-control" required="">
           </div>
           <div class="col">
               <select class="form-control" name="discount">
                 {% for ii in range_discount %}
-                  <option value="{{ ii }}">{{ ii }}%</option>
+                  <option value="{{ ii }}" {% if ii == form.discount.value %} selected {% endif %}>{{ ii }}%</option>
                 {% endfor %}
               </select>
           </div>
           <div class="col">
             <select class="form-control ft-type" name="ft_type">
-              <option value="FTS">FTS</option>
-              <option value="MA">MA</option>
+              <option value="FTS" {% if form.ft_type.value == 'FTS' %} selected="" {% endif %}>FTS</option>
+              <option value="MA" {% if form.ft_type.value == 'MA' %} selected="" {% endif %}>MA</option>
             </select>
           </div>
-          <div class="col ma-type d-none">
+          <div class="col ma-type {% if form.ft_type.value != 'MA' %} d-none {% endif %}">
             <select class="form-control" name="ma_type">
-              <option value="10D">10D</option>
-              <option value="30D">30D</option>
+              <option value="10D" {% if form.ma_type.value == '10D' %} selected="" {% endif %}>10D</option>
+              <option value="30D" {% if form.ma_type.value == '30D' %} selected="" {% endif %}>30D</option>
             </select>
           </div>
           <div class="col">
-            <input type="number" step="0.01" class="form-control" name="min_price" min="0">
+            <input type="number" step="0.01" class="form-control" name="min_price" value="{{ form.min_price.value }}" min="0">
           </div>
           <div class="col">
             <select class="form-control" name="duration">
-              <option value="DAY">DAY</option>
-              <option value="GTC">GTC</option>
+              <option value="DAY" {% if form.duration.value == 'DAY' %} selected="" {% endif %}>DAY</option>
+              <option value="GTC" {% if form.duration.value == 'GTC' %} selected="" {% endif %}>GTC</option>
             </select>
           </div>
          </div>
@@ -102,18 +102,18 @@
            </div>
 
            <div class="col-md-1">
-            <label class="radio-inline"><input type="radio" name="accept_counter_bids" checked="" value="true">YES</label>            
+            <label class="radio-inline"><input type="radio" name="accept_counter_bids" {% if form.accept_counter_bids.value %} checked="" {% endif %} value="true">YES</label>            
            </div>
 
            <div class="col-md-1">
-            <label class="radio-inline"><input type="radio" name="accept_counter_bids" value="false">NO</label>
+            <label class="radio-inline"><input type="radio" name="accept_counter_bids" {% if not form.accept_counter_bids.value %} checked="" {% endif %} value="false">NO</label>
            </div>
            <div class="col-md-1">
             TIME
            </div>
            <div class="col-md-3 form-group">
             <div class="input-group date">
-              <input type="text" name="timestamp" class="form-control" required="">
+              <input type="text" name="timestamp" class="form-control" required="" value="{{ form.timestamp.value }}">
               <span class="input-group-addon">
                   <span class="glyphicon glyphicon-calendar"></span>
               </span>            
@@ -126,11 +126,11 @@
            </div>
 
            <div class="col-md-1">
-            <label class="radio-inline"><input type="radio" name="accept_private_counter_offer" checked="" value="true">YES</label>            
+            <label class="radio-inline"><input type="radio" name="accept_private_counter_offer" {% if form.accept_private_counter_offer.value %} checked="" {% endif %} value="true">YES</label>            
            </div>
 
            <div class="col-md-1">
-            <label class="radio-inline"><input type="radio" name="accept_private_counter_offer" value="false">NO</label>            
+            <label class="radio-inline"><input type="radio" name="accept_private_counter_offer" value="false" {% if not form.accept_private_counter_offer.value %} checked="" {% endif %}>NO</label>            
            </div>
          </div>
          </form>
