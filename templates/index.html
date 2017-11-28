@@ -100,18 +100,7 @@
            <div class="col-md-1">
             <label class="radio-inline"><input type="radio" name="accept_counter_bids" {% if not form.accept_counter_bids.value %} checked="" {% endif %} value="false">NO</label>
            </div>
-<!--            <div class="col-md-1">
-            TIME
-           </div>
-           <div class="col-md-3 form-group">
-            <div class="input-group date">
-              <input type="text" name="timestamp" class="form-control" required="" value="{{ form.timestamp.value }}">
-              <span class="input-group-addon">
-                  <span class="glyphicon glyphicon-calendar"></span>
-              </span>            
-            </div>
-           </div>
- -->         </div>
+         </div>
          <div class="row">
            <div class="offset-md-3 col-md-3">
             ACCEPT PRIVATE COUNTER OFFER?
@@ -186,8 +175,5 @@
       });
   });
 
-  // $(function () {
-  //   $('.date').datetimepicker();
-  // });  
 </script>
 {% endblock %}
