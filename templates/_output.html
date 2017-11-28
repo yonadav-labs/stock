@@ -13,6 +13,7 @@
             <td>{{ ii.duration }}</td>
             <td>{% if ii.accept_counter_bids %} YES {% else %} NO {% endif %}</td>
             <td>{% if ii.accept_private_counter_offer %} YES {% else %} NO {% endif %}</td>
+            <td>{{ ii.timestamp|date:"Y-m-d H:i:s" }}</td>
         </tr>
     {% endfor %}
 {% else %}

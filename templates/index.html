@@ -160,6 +160,7 @@
                             <th>DURATION</th>
                             <th>COUNTER BIDS</th>
                             <th>PRIVATE OFFER</th>
+                            <th>CREATED AT</th>
                         </tr>
                     </thead>
                     <tbody class="output_body">
@@ -196,7 +197,7 @@
             success: function(res) {
                 jQuery('.input_body').html(res.input_html);
                 jQuery('.output_body').html(res.output_html);
-                
+
                 if (res.can_submit) {
                     $('.btn-submit').removeAttr('disabled');
                 } else {
