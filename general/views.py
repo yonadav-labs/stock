@@ -15,8 +15,9 @@ def home(request):
             form.save()
     else:
         form = OutputForm()
-        
+
     return render(request, 'index.html', {
+        'form': form,
         'range_discount': range(1, 26),
-        'inputs': inputs
+        'inputs': inputs,
     })

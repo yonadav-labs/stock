@@ -5,17 +5,7 @@
 {% block body %}
 
 <div class="container">
-<!--   <ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a class="nav-link active" data-toggle="tab" href="#first">First</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#second">Second</a>
-    </li>
-  </ul> -->
   <div class="tab-content">
-    <!-- <div class="tab-pane container" id="second"> -->
-
          <div class="row">
           <div class="col">
               SYMBOL
@@ -50,17 +40,17 @@
          <div class="row">
           {% csrf_token %}
           <div class="col">
-              <input type="text" class="form-control" name="symbol" value="{{ form.symbol.value }}" required="">
+              <input type="text" class="form-control" name="symbol" value="{% if form.symbol.value %}{{ form.symbol.value }}{% endif %}" required="">
           </div>
           <div class="col">
               SELL
               <input type="hidden" name="action" value="SELL">
           </div>
           <div class="col">
-              <input type="text" name="shares_max" value='{{ form.shares_max.value }}' class="form-control" required="">
+              <input type="text" name="shares_max" value='{% if form.shares_max.value %}{{ form.shares_max.value }}{% endif %}' class="form-control" required="">
           </div>
           <div class="col">
-              <input type="text" name="shares_min" value='{{ form.shares_min.value }}' class="form-control" required="">
+              <input type="text" name="shares_min" value='{% if form.shares_min.value %}{{ form.shares_min.value }}{% endif %}' class="form-control" required="">
           </div>
           <div class="col">
               <select class="form-control" name="discount">
