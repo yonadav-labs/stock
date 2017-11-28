@@ -1,0 +1,22 @@
+{% load extra %} 
+
+{% if outputs %}
+    {% for ii in outputs %}
+        <tr>
+            <td>{{ ii.symbol }}</td>
+            <td>{{ ii.shares_max }}</td>
+            <td>{{ ii.shares_min }}</td>
+            <td>{{ ii.discount }}</td>
+            <td>{{ ii.ft_type }}</td>
+            <td>{% if ii.ma_type %}{{ ii.ma_type }}{% else %}-{% endif %}</td>
+            <td>{{ ii.min_price }}</td>
+            <td>{{ ii.duration }}</td>
+            <td>{% if ii.accept_counter_bids %} YES {% else %} NO {% endif %}</td>
+            <td>{% if ii.accept_private_counter_offer %} YES {% else %} NO {% endif %}</td>
+        </tr>
+    {% endfor %}
+{% else %}
+    <tr>
+        <td colspan="8">Symbol not found</td>
+    </tr>
+{% endif %}

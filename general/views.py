@@ -16,25 +16,31 @@ def home(request):
             form.save()
             symbol = form.cleaned_data['symbol']
             inputs = StockInput.objects.filter(symbol=symbol)
+            outputs = StockOutput.objects.filter(symbol=symbol)
     else:
         form = OutputForm()
         inputs = StockInput.objects.all()
+        outputs = []
 
     return render(request, 'index.html', {
         'form': form,
         'range_discount': range(1, 26),
         'inputs': inputs,
+        'outputs': outputs
     })
 
-def get_input_body(request):
+def get_body(request):
     symbol = request.GET.get('symbol')
     if symbol:
         inputs = StockInput.objects.filter(symbol=symbol)
+        outputs = StockOutput.objects.filter(symbol=symbol)
         can_submit = True if inputs else False
     else:
         inputs = StockInput.objects.all()
+        outputs = []
         can_submit = False
 
-    html = render_to_string('_input.html', { 'inputs': inputs })
+    input_html = render_to_string('_input.html', { 'inputs': inputs })
+    output_html = render_to_string('_output.html', { 'outputs': outputs })
 
-    return JsonResponse({'html': html, 'can_submit': can_submit}, safe=False)
+    return JsonResponse({'input_html': input_html, 'output_html': output_html, 'can_submit': can_submit}, safe=False)

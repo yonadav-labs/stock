@@ -23,5 +23,5 @@ admin.site.site_header = "Stock Administration"
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', home, name="home"),
-    url(r'^get_input_body', get_input_body, name="get_input_body"),
+    url(r'^get_body', get_body, name="get_body"),
 ]
