@@ -24,4 +24,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', home, name="home"),
     url(r'^get_body', get_body, name="get_body"),
+    url(r'^input', input, name="input"),
+    url(r'^i_post/(?P<symbol>.*)', i_post, name="i_post"),
 ]

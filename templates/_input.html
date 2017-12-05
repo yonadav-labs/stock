@@ -3,7 +3,7 @@
 
 {% if inputs %}
   {% for ii in inputs %}
-    <tr>
+    <tr data-symbol="{{ ii.symbol }}">
       <td>{{ ii.symbol }}</td>
       <td>{{ ii.last }}</td>
       <td>{{ ii|percent_change }}</td>

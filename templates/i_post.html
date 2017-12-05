@@ -1,0 +1,210 @@
+{% extends 'base.html' %} 
+
+{% block body %}
+
+<div class="container-fluid">
+    <div class="col-lg-12 col-xl-10 offset-xl-1">
+
+        <div class="row mt-3">
+            <h4>Issuer - Offer Shares</h4>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                SYMBOL
+            </div>
+            <div class="col">
+                ACTION
+            </div>
+            <div class="col">
+                SHARES(MAX)
+            </div>
+            <div class="col">
+                SHARES(MIN)
+            </div>
+            <div class="col">
+                DISCOUNT
+            </div>
+            <div class="col">
+                TYPE
+            </div>
+            <div class="col">
+                MA TYPE
+            </div>
+            <div class="col">
+                MIN PRICE
+            </div>
+            <div class="col">
+                DURATION
+            </div>
+        </div>
+
+        <form method="post">
+            <div class="row">
+                {% csrf_token %}
+                <div class="col">
+                    <input type="text" class="form-control input_symbol" name="symbol" value="{% if form.symbol.value %}{{ form.symbol.value }}{% endif %}" readonly="">
+                </div>
+                <div class="col">
+                    SELL
+                    <input type="hidden" name="action" value="SELL">
+                </div>
+                <div class="col">
+                    <input type="text" name="shares_max" value='{% if form.shares_max.value %}{{ form.shares_max.value }}{% endif %}' class="form-control" required="">
+                </div>
+                <div class="col">
+                    <input type="text" name="shares_min" value='{% if form.shares_min.value %}{{ form.shares_min.value }}{% endif %}' class="form-control" required="">
+                </div>
+                <div class="col">
+                    <select class="form-control" name="discount">
+                        {% for ii in range_discount %}
+                        <option value="{{ ii }}" {% if ii == form.discount.value %} selected {% endif %}>{{ ii }}%</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col">
+                    <select class="form-control ft-type" name="ft_type">
+                        <option value="FTS" {% if form.ft_type.value == 'FTS' %} selected="" {% endif %}>FTS</option>
+                        <option value="MA" {% if form.ft_type.value == 'MA' %} selected="" {% endif %}>MA</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <select class="form-control ma-type" name="ma_type" {% if form.ft_type.value != 'MA' %} disabled="" {% endif %}>
+                        <option value="10D" {% if form.ma_type.value == '10D' %} selected="" {% endif %}>10D</option>
+                        <option value="30D" {% if form.ma_type.value == ' 30D' %} selected="" {% endif %}>30D</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <input type="number" step="0.01" class="form-control" name="min_price" value="{{ form.min_price.value }}" min="0" required="">
+                </div>
+                <div class="col">
+                    <select class="form-control" name="duration">
+                        <option value="DAY" {% if form.duration.value == 'DAY' %} selected="" {% endif %}>DAY</option>
+                        <option value="GTC" {% if form.duration.value == 'GTC' %} selected="" {% endif %}>GTC</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-3">
+                    <input type="submit" value="Submit" class="btn btn-success btn-submit" disabled>
+                </div>
+
+                <div class="col-md-3">
+                    ACCEPT COUNTER BIDS?
+                </div>
+
+                <div class="col-md-1">
+                    <label class="radio-inline">
+                        <input type="radio" name="accept_counter_bids" {% if form.accept_counter_bids.value %} checked="" {% endif %} value="true">YES</label>
+                </div>
+
+                <div class="col-md-1">
+                    <label class="radio-inline">
+                        <input type="radio" name="accept_counter_bids" {% if not form.accept_counter_bids.value %} checked="" {% endif %} value="false">NO</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="offset-md-3 col-md-3">
+                    ACCEPT PRIVATE COUNTER OFFER?
+                </div>
+
+                <div class="col-md-1">
+                    <label class="radio-inline">
+                        <input type="radio" name="accept_private_counter_offer" {% if form.accept_private_counter_offer.value %} checked="" {% endif %} value="true">YES</label>
+                </div>
+
+                <div class="col-md-1">
+                    <label class="radio-inline">
+                        <input type="radio" name="accept_private_counter_offer" value="false" {% if not form.accept_private_counter_offer.value %} checked="" {% endif %}>NO</label>
+                </div>
+            </div>
+        </form>
+
+        <div class="row mt-4">
+            <h5>FREE TRADING QUOTE</h5>
+        </div>
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>SYMBOL</th>
+                            <th>LAST</th>
+                            <th>CHANGE</th>
+                            <th>BID</th>
+                            <th>ASK</th>
+                            <th>HIGH</th>
+                            <th>LOW</th>
+                            <th>VOLUME</th>
+                        </tr>
+                    </thead>
+                    <tbody class="input_body">
+                        {% include '_input.html' %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>SYMBOL</th>
+                            <th>SHARES MAX</th>
+                            <th>SHARES MIN</th>
+                            <th>DISCOUNT</th>
+                            <th>FT TYPE</th>
+                            <th>MA TYPE</th>
+                            <th>MIN PRICE</th>
+                            <th>DURATION</th>
+                            <th>COUNTER BIDS</th>
+                            <th>PRIVATE OFFER</th>
+                            <th>CREATED AT</th>
+                        </tr>
+                    </thead>
+                    <tbody class="output_body">
+                        {% include '_output.html' %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %} 
+
+{% block js %}
+<script type="text/javascript">
+    $('.ft-type').change(function() {
+        var ft_type = $(this).val();
+        console.log(ft_type);
+
+        if (ft_type == 'MA') {
+            $('.ma-type').removeAttr('disabled');
+        } else {
+            $('.ma-type').attr('disabled', true);
+        }
+    });
+
+    $('.input_symbol').keyup(function() {
+        jQuery.ajax({
+            type: 'get',
+            url: '/get_body',
+            data: {
+                symbol: $('.input_symbol').val()
+            },
+            success: function(res) {
+                jQuery('.input_body').html(res.input_html);
+                jQuery('.output_body').html(res.output_html);
+
+                if (res.can_submit) {
+                    $('.btn-submit').removeAttr('disabled');
+                } else {
+                    $('.btn-submit').attr('disabled', true);
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

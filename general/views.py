@@ -44,3 +44,24 @@ def get_body(request):
     output_html = render_to_string('_output.html', { 'outputs': outputs })
 
     return JsonResponse({'input_html': input_html, 'output_html': output_html, 'can_submit': can_submit}, safe=False)
+
+def input(request):
+    return render(request, 'i_table.html', {
+        'inputs': StockInput.objects.all()
+    })
+
+def i_post(request, symbol):
+    if request.method == 'POST':
+        form = OutputForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+    else:        
+        form = OutputForm(initial={'symbol': symbol})
+
+    return render(request, 'i_post.html', {
+        'form': form,
+        'inputs': [StockInput.objects.get(symbol=symbol)],
+        'outputs': StockOutput.objects.filter(symbol=symbol)
+    })
+    
