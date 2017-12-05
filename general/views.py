@@ -57,7 +57,10 @@ def i_post(request, symbol):
         if form.is_valid():
             form.save()
     else:        
-        form = OutputForm(initial={'symbol': symbol})
+        form = OutputForm(initial={
+            'symbol': symbol,
+            'min_price': 0
+        })
 
     return render(request, 'i_post.html', {
         'form': form,
