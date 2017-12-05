@@ -1,5 +1,22 @@
 {% extends 'base.html' %} 
 
+{% block css %}
+<style type="text/css">
+    .error {
+        color: red;
+    }
+
+    .error ul {
+        list-style-type: none;
+        padding-left: 14px;        
+    }
+
+    select {
+        height: 34px !important;
+    }
+</style>
+{% endblock %}
+
 {% block body %}
 
 <div class="container-fluid">
@@ -7,6 +24,9 @@
 
         <div class="row mt-3">
             <h4>Issuer - Offer Shares</h4>
+        </div>
+        <div class="row mt-3 error">
+            {{ form.non_field_errors }}
         </div>
         <div class="row mt-3">
             <div class="col">
@@ -160,6 +180,7 @@
                             <th>DURATION</th>
                             <th>COUNTER BIDS</th>
                             <th>PRIVATE OFFER</th>
+                            <th>DISCOUNTED PRICE</th>
                             <th>CREATED AT</th>
                         </tr>
                     </thead>
