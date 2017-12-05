@@ -61,6 +61,7 @@ def i_post(request, symbol):
 
     return render(request, 'i_post.html', {
         'form': form,
+        'range_discount': range(1, 26),
         'inputs': [StockInput.objects.get(symbol=symbol)],
         'outputs': StockOutput.objects.filter(symbol=symbol)
     })

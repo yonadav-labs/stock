@@ -86,7 +86,7 @@
 
             <div class="row mt-5">
                 <div class="col-md-3">
-                    <input type="submit" value="Submit" class="btn btn-success btn-submit" disabled>
+                    <input type="submit" value="Submit" class="btn btn-success btn-submit">
                 </div>
 
                 <div class="col-md-3">
@@ -187,24 +187,5 @@
         }
     });
 
-    $('.input_symbol').keyup(function() {
-        jQuery.ajax({
-            type: 'get',
-            url: '/get_body',
-            data: {
-                symbol: $('.input_symbol').val()
-            },
-            success: function(res) {
-                jQuery('.input_body').html(res.input_html);
-                jQuery('.output_body').html(res.output_html);
-
-                if (res.can_submit) {
-                    $('.btn-submit').removeAttr('disabled');
-                } else {
-                    $('.btn-submit').attr('disabled', true);
-                }
-            }
-        });
-    });
 </script>
 {% endblock %}
