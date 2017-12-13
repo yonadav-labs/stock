@@ -12,6 +12,9 @@ class OutPutAdmin(admin.ModelAdmin):
     def formatted_time(self, obj):
     	return obj.timestamp.strftime("%Y-%m-%d %H:%M:%S")
 
+class PriceHistoryAdmin(admin.ModelAdmin):
+	list_display = ['symbol', 'close', 'open', 'high', 'low', 'date']
+
 admin.site.register(IssueTable)
-admin.site.register(PriceHistory)
+admin.site.register(PriceHistory, PriceHistoryAdmin)
 admin.site.register(OfferList, OutPutAdmin)

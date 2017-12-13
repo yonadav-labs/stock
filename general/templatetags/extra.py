@@ -8,8 +8,13 @@ register = template.Library()
 
 @register.filter
 def percent_change(sinput):
-    percent = sinput.change * 100 / sinput.last
-    return '{0}({1:.2f}%)'.format(sinput.change, percent)
+    ph = PriceHistory.objects.filter(symbol=sinput.symbol).order_by('-date')
+    if ph:
+        lclose = ph[0].close
+        change = lclose - ph[1].close
+        percent = change * 100 / lclose
+        return '{0}({1:.2f}%)'.format(change, percent)
+    return '-'
 
 @register.filter
 def discount(soutput):
@@ -17,8 +22,22 @@ def discount(soutput):
         sinput = IssueTable.objects.get(symbol=soutput.symbol)
         discounted_price = sinput.last * (100 - soutput.discount) / 100
         return '{0:.2f}'.format(discounted_price)
-    return '-'
+    else:
+        ph = PriceHistory.objects.filter(symbol=soutput.symbol).order_by('-date')[:10]
+        if ph:
+            av = 0                
+            for ii in ph:
+                av += ii.close
+            return '{0:.2f}'.format(av/10)
+        return '-'
 
 @register.filter
 def count_offers(symbol):
-	return OfferList.objects.filter(symbol=symbol).count()
+    return OfferList.objects.filter(symbol=symbol).count()
+
+@register.filter
+def last_close(symbol):
+    ph = PriceHistory.objects.filter(symbol=symbol).order_by('-date')
+    if ph:
+        return ph[0].close
+    return '-'

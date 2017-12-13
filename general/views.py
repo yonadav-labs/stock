@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import csv
+
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.http import HttpResponse
@@ -43,3 +45,21 @@ def delete_offer(request):
     oid = request.POST.get('id')
     OfferList.objects.filter(id=oid).delete()
     return HttpResponse('')
+
+def import_pricehistory(request, symbol):
+    path = '/home//work/table extracts/employers.csv'
+    path = '/root/work/stock/data/data.csv'
+    with open(path) as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            try:
+                PriceHistory.objects.create(symbol=symbol,
+                                            open=row['Open'],
+                                            high=row['High'],
+                                            low=row['Low'],
+                                            close=row['Close'],
+                                            date=row['Date'])
+            except Exception as e:
+                print e
+
+    return HttpResponse('Successfully Imported')
