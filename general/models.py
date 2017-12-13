@@ -24,11 +24,6 @@ FT_TYPE = (
     ('MA', 'MA'),
 )
 
-MA_TYPE = (
-    ('10D', '10D'),
-    ('30D', '30D'),
-)
-
 DURATION = (
     ('DAY', 'DAY'),
     ('GTC', 'GTC'),
@@ -41,7 +36,7 @@ class OfferList(models.Model):
     shares_min = models.IntegerField()
     discount = models.IntegerField()
     ft_type = models.CharField(max_length=50, choices=FT_TYPE)
-    ma_type = models.CharField(max_length=50, choices=MA_TYPE, null=True, blank=True)
+    ma_days = models.IntegerField(default=0, null=True, blank=True)
     min_price = models.FloatField()
     duration = models.CharField(max_length=50, choices=DURATION)
     accept_counter_bids = models.BooleanField()

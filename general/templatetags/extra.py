@@ -23,12 +23,12 @@ def discount(soutput):
         discounted_price = sinput.last * (100 - soutput.discount) / 100
         return '{0:.2f}'.format(discounted_price)
     else:
-        ph = PriceHistory.objects.filter(symbol=soutput.symbol).order_by('-date')[:10]
+        ph = PriceHistory.objects.filter(symbol=soutput.symbol).order_by('-date')[:soutput.ma_days]
         if ph:
             av = 0                
             for ii in ph:
                 av += ii.close
-            return '{0:.2f}'.format(av/10)
+            return '{0:.2f}'.format(av/soutput.ma_days)
         return '-'
 
 @register.filter

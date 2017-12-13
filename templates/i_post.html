@@ -27,6 +27,7 @@
         </div>
         <div class="row mt-3 error">
             {{ form.non_field_errors }}
+            {{ form.errors }}
         </div>
         <div class="row mt-3">
             <div class="col">
@@ -48,7 +49,7 @@
                 TYPE
             </div>
             <div class="col">
-                MA TYPE
+                MA DAYS
             </div>
             <div class="col">
                 MIN PRICE
@@ -89,14 +90,9 @@
                 </div>
                 <div class="col">
                     {% if form.ft_type.value != 'MA' %}
-                        <select class="form-control ma-type" name="ma_type" disabled="">
-                            <option value="">N/A</option>
-                        </select>
+                        <input type="text" class="form-control ma_days" name="ma_days" value="N/A" min="1" max="90" required="" disabled="">
                     {% else %}
-                        <select class="form-control ma-type" name="ma_type">
-                            <option value="10D" {% if form.ma_type.value == '10D' %} selected="" {% endif %}>10D</option>
-                            <option value="30D" {% if form.ma_type.value == ' 30D' %} selected="" {% endif %}>30D</option>
-                        </select>
+                        <input type="number" class="form-control ma_days" name="ma_days" value="{{ form.ma_days.value }}" min="1" max="90" required="">
                     {% endif %}
                 </div>
                 <div class="col">
@@ -184,11 +180,15 @@
         console.log(ft_type);
 
         if (ft_type == 'MA') {
-            $('.ma-type').html('<option value="10D">10D</option><option value="30D">30D</option>');
-            $('.ma-type').removeAttr('disabled');
+            $('.ma_days').attr('type', 'number');
+            $('.ma_days').attr('name', 'ma_days');
+            $('.ma_days').val(1);
+            $('.ma_days').removeAttr('disabled');
         } else {
-            $('.ma-type').html('<option value="">N/A</option>');
-            $('.ma-type').attr('disabled', true);
+            $('.ma_days').attr('type', 'text');
+            $('.ma_days').attr('name', 'ma_days1');
+            $('.ma_days').val('N/A');
+            $('.ma_days').attr('disabled', true);
         }
     });
 
