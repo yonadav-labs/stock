@@ -14,11 +14,11 @@ def percent_change(sinput):
 @register.filter
 def discount(soutput):
     if soutput.ft_type == 'FTS':
-        sinput = StockInput.objects.get(symbol=soutput.symbol)
+        sinput = IssueTable.objects.get(symbol=soutput.symbol)
         discounted_price = sinput.last * (100 - soutput.discount) / 100
         return '{0:.2f}'.format(discounted_price)
     return '-'
 
 @register.filter
 def count_offers(symbol):
-	return StockOutput.objects.filter(symbol=symbol).count()
+	return OfferList.objects.filter(symbol=symbol).count()

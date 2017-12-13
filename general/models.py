@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 
 
-class StockInput(models.Model):
+class IssueTable(models.Model):
     symbol = models.CharField(max_length=100, primary_key=True)
     last = models.FloatField()
     change = models.FloatField()
@@ -33,7 +33,7 @@ DURATION = (
     ('GTC', 'GTC'),
 )
 
-class StockOutput(models.Model):
+class OfferList(models.Model):
     symbol = models.CharField(max_length=100)
     action = models.CharField(max_length=100)
     shares_max = models.IntegerField()

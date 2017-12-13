@@ -12,5 +12,5 @@ class OutPutAdmin(admin.ModelAdmin):
     def formatted_time(self, obj):
     	return obj.timestamp.strftime("%Y-%m-%d %H:%M:%S")
 
-admin.site.register(StockInput)
-admin.site.register(StockOutput, OutPutAdmin)
+admin.site.register(IssueTable)
+admin.site.register(OfferList, OutPutAdmin)

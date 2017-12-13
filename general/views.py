@@ -12,7 +12,7 @@ from general.forms import *
 
 def home(request):
     return render(request, 'i_table.html', {
-        'inputs': StockInput.objects.all()
+        'inputs': IssueTable.objects.all()
     })
 
 def i_post(request, symbol):
@@ -30,17 +30,16 @@ def i_post(request, symbol):
     return render(request, 'i_post.html', {
         'form': form,
         'range_discount': range(1, 26),
-        'inputs': [StockInput.objects.get(symbol=symbol)],
-        'outputs': StockOutput.objects.filter(symbol=symbol)
+        'inputs': [IssueTable.objects.get(symbol=symbol)],
     })
     
 def i_posts(request, symbol):
     return render(request, 'i_posts.html', {
-        'outputs': StockOutput.objects.filter(symbol=symbol)
+        'outputs': OfferList.objects.filter(symbol=symbol)
     })
 
 @csrf_exempt
 def delete_offer(request):
     oid = request.POST.get('id')
-    StockOutput.objects.filter(id=oid).delete()
+    OfferList.objects.filter(id=oid).delete()
     return HttpResponse('')

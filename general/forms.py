@@ -6,7 +6,7 @@ from .models import *
 
 class OutputForm(ModelForm):
     class Meta:
-        model = StockOutput
+        model = OfferList
         fields = '__all__'
  
     def clean(self):

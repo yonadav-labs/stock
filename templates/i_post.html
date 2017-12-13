@@ -88,10 +88,16 @@
                     </select>
                 </div>
                 <div class="col">
-                    <select class="form-control ma-type" name="ma_type" {% if form.ft_type.value != 'MA' %} disabled="" {% endif %}>
-                        <option value="10D" {% if form.ma_type.value == '10D' %} selected="" {% endif %}>10D</option>
-                        <option value="30D" {% if form.ma_type.value == ' 30D' %} selected="" {% endif %}>30D</option>
-                    </select>
+                    {% if form.ft_type.value != 'MA' %}
+                        <select class="form-control ma-type" name="ma_type" disabled="">
+                            <option value="">N/A</option>
+                        </select>
+                    {% else %}
+                        <select class="form-control ma-type" name="ma_type">
+                            <option value="10D" {% if form.ma_type.value == '10D' %} selected="" {% endif %}>10D</option>
+                            <option value="30D" {% if form.ma_type.value == ' 30D' %} selected="" {% endif %}>30D</option>
+                        </select>
+                    {% endif %}
                 </div>
                 <div class="col">
                     <input type="number" step="0.01" class="form-control" name="min_price" value="{{ form.min_price.value }}" min="0" required="">
@@ -164,32 +170,6 @@
                 </table>
             </div>
         </div>
-
-        <div class="row mt-2">
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>SYMBOL</th>
-                            <th>SHARES OFFERED</th>
-                            <th>MIN TO BUY</th>
-                            <th>DISCOUNT</th>
-                            <th>FT TYPE</th>
-                            <th>MA TYPE</th>
-                            <th>MIN PRICE</th>
-                            <th>DURATION</th>
-                            <th>COUNTER BIDS</th>
-                            <th>PRIVATE OFFER</th>
-                            <th>DISCOUNTED PRICE</th>
-                            <th>CREATED AT</th>
-                        </tr>
-                    </thead>
-                    <tbody class="output_body">
-                        {% include '_output.html' %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -202,8 +182,10 @@
         console.log(ft_type);
 
         if (ft_type == 'MA') {
+            $('.ma-type').html('<option value="10D">10D</option><option value="30D">30D</option>');
             $('.ma-type').removeAttr('disabled');
         } else {
+            $('.ma-type').html('<option value="">N/A</option>');
             $('.ma-type').attr('disabled', true);
         }
     });
