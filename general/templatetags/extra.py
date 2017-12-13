@@ -18,3 +18,7 @@ def discount(soutput):
         discounted_price = sinput.last * (100 - soutput.discount) / 100
         return '{0:.2f}'.format(discounted_price)
     return '-'
+
+@register.filter
+def count_offers(symbol):
+	return StockOutput.objects.filter(symbol=symbol).count()

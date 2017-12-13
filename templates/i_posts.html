@@ -1,0 +1,56 @@
+{% extends 'base.html' %} 
+
+{% block body %}
+<div class="container-fluid">
+    <div class="col-lg-12 col-xl-10 offset-xl-1">
+        <div class="row mt-2">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>SYMBOL</th>
+                            <th>SHARES OFFERED</th>
+                            <th>MIN TO BUY</th>
+                            <th>DISCOUNT</th>
+                            <th>FT TYPE</th>
+                            <th>MA TYPE</th>
+                            <th>MIN PRICE</th>
+                            <th>DURATION</th>
+                            <th>COUNTER BIDS</th>
+                            <th>PRIVATE OFFER</th>
+                            <th>DISCOUNTED PRICE</th>
+                            <th>CREATED AT</th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody class="output_body">
+                        {% include '_output.html' %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+    jQuery("body").on('click', '.action.delete', function() {
+        var r = confirm("Are you sure to delete this offer?");
+        if (r == true) {
+            var oid = jQuery(this).data('id');
+            jQuery.ajax({
+                type: 'post',
+                url: '/delete_offer',
+                data: {
+                    id: oid,
+                },
+                success: function (data) {
+                    location.reload();
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

@@ -18,6 +18,7 @@
                     <thead>
                         <tr>
                             <th>SYMBOL</th>
+                            <th># of Offers</th>
                             <th>LAST</th>
                             <th>CHANGE</th>
                             <th>BID</th>
@@ -40,9 +41,11 @@
 
 {% block js %}
 <script type="text/javascript">
+/*
     jQuery("body").on('click', '.input_body tr', function() {
         var symbol = $(this).data('symbol');
         location.href = '/i_post/' + symbol;
     });
+*/
 </script>
 {% endblock %}
