@@ -13,4 +13,5 @@ class OutPutAdmin(admin.ModelAdmin):
     	return obj.timestamp.strftime("%Y-%m-%d %H:%M:%S")
 
 admin.site.register(IssueTable)
+admin.site.register(PriceHistory)
 admin.site.register(OfferList, OutPutAdmin)

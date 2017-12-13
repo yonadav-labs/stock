@@ -49,3 +49,15 @@ class OfferList(models.Model):
 
     def __str__(self):
         return '{} - {}'.format(self.symbol, self.action) 
+
+
+class PriceHistory(models.Model):
+    symbol = models.CharField(max_length=100)
+    open = models.FloatField()
+    high = models.FloatField()
+    low = models.FloatField()
+    close = models.FloatField()
+    date = models.DateField()
+
+    def __str__(self):
+        return self.symbol
