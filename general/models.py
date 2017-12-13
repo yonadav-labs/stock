@@ -6,6 +6,7 @@ from django.db import models
 
 class IssueTable(models.Model):
     symbol = models.CharField(max_length=100, primary_key=True)
+    num_shares_available = models.IntegerField()
     last = models.FloatField()
     change = models.FloatField()
     bid = models.FloatField()

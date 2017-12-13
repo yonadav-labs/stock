@@ -5,7 +5,6 @@
   {% for ii in inputs %}
     <tr data-symbol="{{ ii.symbol }}">
       <td><a href="/i_post/{{ ii.symbol }}">{{ ii.symbol }}</a></td>
-      <th><a href="/i_post/{{ ii.symbol }}" class="btn btn-success">Offer</a></th>
       <td><a href="/i_posts/{{ ii.symbol }}">{{ ii.symbol|count_offers }}</a></td>
       <td>{{ ii.last }}</td>
       <td>{{ ii|percent_change }}</td>
