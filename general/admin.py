@@ -14,7 +14,7 @@ class OutPutAdmin(admin.ModelAdmin):
 
 class PriceHistoryAdmin(admin.ModelAdmin):
     list_display = ['symbol', 'close', 'open', 'high', 'low', 'date']
-    search_fields = ['name']    
+    search_fields = ['symbol']    
     
 admin.site.register(IssueTable)
 admin.site.register(PriceHistory, PriceHistoryAdmin)
