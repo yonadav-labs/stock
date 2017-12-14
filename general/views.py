@@ -54,12 +54,12 @@ def import_pricehistory(request):
                 reader = csv.DictReader(csvfile)
                 for row in reader:
                     try:
-                        PriceHistory.objects.create(symbol=ii.symbol,
-                                                    open=row['Open'],
-                                                    high=row['High'],
-                                                    low=row['Low'],
-                                                    close=row['Close'],
-                                                    date=row['Date'])
+                        PriceHistory.objects.get_or_create(symbol=ii.symbol,
+                                                           open=row['Open'],
+                                                           high=row['High'],
+                                                           low=row['Low'],
+                                                           close=row['Close'],
+                                                           date=row['Date'])
                     except Exception as e:
                         print e
         except Exception as e:
