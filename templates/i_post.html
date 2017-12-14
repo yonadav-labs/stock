@@ -79,13 +79,13 @@
                     <input type="hidden" name="action" value="SELL">
                 </div>
                 <div class="col">
-                    <input type="text" name="shares_max" value='{% if form.shares_max.value %}{{ form.shares_max.value }}{% endif %}' class="form-control" required="">
+                    <input type="number" name="shares_max" value='{% if form.shares_max.value %}{{ form.shares_max.value }}{% endif %}' class="form-control shares_max" required="" max="{{ ii.num_shares_available }}">
                 </div>
                 <div class="col">
-                    <input type="text" name="shares_min" value='{% if form.shares_min.value %}{{ form.shares_min.value }}{% endif %}' class="form-control" required="">
+                    <input type="number" name="shares_min" value='{% if form.shares_min.value %}{{ form.shares_min.value }}{% endif %}' class="form-control shares_min" required="">
                 </div>
                 <div class="col">
-                    <select class="form-control" name="discount">
+                    <select class="form-control discount" name="discount">
                         {% for ii in range_discount %}
                         <option value="{{ ii }}" {% if ii == form.discount.value %} selected {% endif %}>{{ ii }}%</option>
                         {% endfor %}
@@ -111,10 +111,10 @@
                     {% endif %}
                 </div>
                 <div class="col">
-                    <input type="number" step="0.01" class="form-control" name="min_price" value="{{ form.min_price.value }}" min="0" required="">
+                    <input type="number" step="0.01" class="form-control min_price" name="min_price" value="{{ form.min_price.value }}" min="0" required="">
                 </div>
                 <div class="col">
-                    <select class="form-control" name="duration">
+                    <select class="form-control duration" name="duration">
                         <option value="DAY" {% if form.duration.value == 'DAY' %} selected="" {% endif %}>DAY</option>
                         <option value="GTC" {% if form.duration.value == 'GTC' %} selected="" {% endif %}>GTC</option>
                     </select>
@@ -228,18 +228,27 @@
 
 <!-- The Modal -->
 <div class="modal fade" id="confirm-modal">
-  <div class="modal-dialog">
+  <div class="modal-dialog" style="top: 200px;">
     <div class="modal-content">
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Submit Confirmation</h4>
+        <h4 style="color: #4DBEE2;">Do you confirm to create an offer with following information?</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
 
       <!-- Modal body -->
-      <div class="modal-body">
-        Modal body..
+      <div class="modal-body">        
+        <div><label>Symbol: </label><span class="c-symbol"></span></div>
+        <div><label>SHARES OFFERED: </label><span class="c-shares_max"></span></div>
+        <div><label>MIN TO BUY: </label><span class="c-shares_min"></span></div>
+        <div><label>DISCOUNT: </label><span class="c-discount"></span></div>
+        <div><label>TYPE: </label><span class="c-ft-type"></span></div>
+        <div><label>MA DAYS : </label><span class="c-ma_days"></span></div>
+        <div><label>MIN PRICE : </label><span class="c-min_price"></span></div>
+        <div><label>DURATION: </label><span class="c-duration"></span></div>
+        <div><label>ACCEPT COUNTER BIDS? : </label><span class="c-accept_counter_bids"></span></div>
+        <div><label>ACCEPT PRIVATE COUNTER OFFER? : </label><span class="c-accept_private_counter_offer"></span></div>
       </div>
 
       <!-- Modal footer -->
@@ -255,6 +264,7 @@
 
 {% block js %}
 <script type="text/javascript">
+    var confirmed = false;
     $('.ft-type').change(function() {
         var ft_type = $(this).val();
 
@@ -278,15 +288,36 @@
                     id: oid,
                 },
                 success: function (data) {
-                    location.reload();
+                    location.href = "{{ request.path }}";
                 }
             });
         }
     });
 
+    $('.shares_max').change(function() {
+        $('.shares_min').attr('max', $(this).val());
+    });
+
     $('.issue-form').submit(function(e) {
-        e.preventDefault();
-        $('#confirm-modal').modal();
+        if (!confirmed) {
+            e.preventDefault();
+            $('.c-symbol').html($('.input_symbol').val());
+            $('.c-shares_max').html($('.shares_max').val());
+            $('.c-shares_min').html($('.shares_min').val());
+            $('.c-discount').html($('.discount').val()+'%');
+            $('.c-ft-type').html($('.ft-type').val());
+            $('.c-ma_days').html($('.ma_days').val());
+            $('.c-duration').html($('.duration').val());
+            $('.c-min_price').html($('.min_price').val());
+            $('.c-accept_counter_bids').html($('.input_symbol').val());
+            $('.c-accept_private_counter_offer').html($('.input_symbol').val());
+            $('#confirm-modal').modal();            
+        }
+    });
+
+    $('.btn-confirm').click(function() {
+        confirmed = true;
+        $('.issue-form').submit();
     });
 </script>
 {% endblock %}

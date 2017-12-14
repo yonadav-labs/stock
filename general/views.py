@@ -20,10 +20,10 @@ def home(request):
 def i_post(request, symbol):
     if request.method == 'POST':
         form = OutputForm(request.POST)
-
+        print '#######'
         if form.is_valid():
             form.save()
-            
+
     form = OutputForm(initial={
         'symbol': symbol,
         'min_price': 0
