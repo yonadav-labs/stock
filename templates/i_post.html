@@ -1,4 +1,6 @@
 {% extends 'base.html' %} 
+{% load humanize %} 
+{% load extra %} 
 
 {% block css %}
 <style type="text/css">
@@ -9,6 +11,12 @@
     .error ul {
         list-style-type: none;
         padding-left: 14px;        
+    }
+
+    .share-max {
+        cursor: pointer;
+        color: black;
+        font-weight: 600;
     }
 
     select {
@@ -37,7 +45,8 @@
                 ACTION
             </div>
             <div class="col">
-                SHARES OFFERED
+                SHARES OFFERED&nbsp;&nbsp;
+                <span title="{{ ii.num_shares_available }}" class="share-max">( Max )</span>
             </div>
             <div class="col">
                 MIN TO BUY
@@ -157,7 +166,6 @@
                     <thead>
                         <tr>
                             <th>SYMBOL</th>
-                            <th># of Offers</th>
                             <th>LAST</th>
                             <th>CHANGE</th>
                             <th>BID</th>
@@ -169,7 +177,17 @@
                         </tr>
                     </thead>
                     <tbody class="input_body">
-                        {% include '__input.html' %}
+                        <tr data-symbol="{{ ii.symbol }}">
+                          <td>{{ ii.symbol }}</td>
+                          <td>{{ ii.symbol|last_close }}</td>
+                          <td>{{ ii|percent_change }}</td>
+                          <td>{{ ii.bid }}</td>
+                          <td>{{ ii.ask }}</td>
+                          <td>{{ ii.high }}</td>
+                          <td>{{ ii.low }}</td>
+                          <td>{{ ii.volume|intcomma }}</td>
+                          <th>{{ ii.num_shares_available }}</th>
+                        </tr>
                     </tbody>
                 </table>
             </div>

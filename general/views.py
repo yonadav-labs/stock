@@ -33,7 +33,7 @@ def i_post(request, symbol):
         'form': form,
         'range_discount': range(1, 26),
         'range_madays': range(5, 31, 5),
-        'inputs': [IssueTable.objects.get(symbol=symbol)],
+        'ii': IssueTable.objects.get(symbol=symbol),
         'outputs': OfferList.objects.filter(symbol=symbol)
     })
     
