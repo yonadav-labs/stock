@@ -26,5 +26,5 @@ urlpatterns = [
     url(r'^i_post/(?P<symbol>.*)', i_post, name="i_post"),
     url(r'^i_posts/(?P<symbol>.*)', i_posts, name="i_posts"),
     url(r'^delete_offer$', delete_offer, name="delete_offer"),
-    url(r'^import_pricehistory/(?P<symbol>.*)', import_pricehistory, name="import_pricehistory"),
+    url(r'^import_pricehistory', import_pricehistory, name="import_pricehistory"),
 ]

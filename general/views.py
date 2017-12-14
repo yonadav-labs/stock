@@ -46,20 +46,23 @@ def delete_offer(request):
     OfferList.objects.filter(id=oid).delete()
     return HttpResponse('')
 
-def import_pricehistory(request, symbol):
-    path = '/home//work/table extracts/employers.csv'
-    path = '/root/work/stock/data/data.csv'
-    with open(path) as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            try:
-                PriceHistory.objects.create(symbol=symbol,
-                                            open=row['Open'],
-                                            high=row['High'],
-                                            low=row['Low'],
-                                            close=row['Close'],
-                                            date=row['Date'])
-            except Exception as e:
-                print e
+def import_pricehistory(request):
+    for ii in IssueTable.objects.all():
+        path = '/root/work/stock/data/{}.csv'.format(ii.symbol.upper())
+        try:
+            with open(path) as csvfile:
+                reader = csv.DictReader(csvfile)
+                for row in reader:
+                    try:
+                        PriceHistory.objects.create(symbol=ii.symbol,
+                                                    open=row['Open'],
+                                                    high=row['High'],
+                                                    low=row['Low'],
+                                                    close=row['Close'],
+                                                    date=row['Date'])
+                    except Exception as e:
+                        print e
+        except Exception as e:
+            print e, '######### no file '
 
     return HttpResponse('Successfully Imported')
