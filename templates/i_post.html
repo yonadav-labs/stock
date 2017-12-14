@@ -132,12 +132,12 @@
 
                 <div class="col-md-1">
                     <label class="radio-inline">
-                        <input type="radio" name="accept_counter_bids" {% if form.accept_counter_bids.value %} checked="" {% endif %} value="true">YES</label>
+                        <input type="radio" name="accept_counter_bids" {% if form.accept_counter_bids.value %} checked="" {% endif %} value="true" class="accept_counter_bids">YES</label>
                 </div>
 
                 <div class="col-md-1">
                     <label class="radio-inline">
-                        <input type="radio" name="accept_counter_bids" {% if not form.accept_counter_bids.value %} checked="" {% endif %} value="false">NO</label>
+                        <input type="radio" name="accept_counter_bids" {% if not form.accept_counter_bids.value %} checked="" {% endif %} value="false" class="accept_counter_bids">NO</label>
                 </div>
             </div>
             <div class="row">
@@ -147,12 +147,12 @@
 
                 <div class="col-md-1">
                     <label class="radio-inline">
-                        <input type="radio" name="accept_private_counter_offer" {% if form.accept_private_counter_offer.value %} checked="" {% endif %} value="true">YES</label>
+                        <input type="radio" name="accept_private_counter_offer" {% if form.accept_private_counter_offer.value %} checked="" {% endif %} value="true" class="accept_private_counter_offer">YES</label>
                 </div>
 
                 <div class="col-md-1">
                     <label class="radio-inline">
-                        <input type="radio" name="accept_private_counter_offer" value="false" {% if not form.accept_private_counter_offer.value %} checked="" {% endif %}>NO</label>
+                        <input type="radio" name="accept_private_counter_offer" value="false" {% if not form.accept_private_counter_offer.value %} checked="" {% endif %} class="accept_private_counter_offer">NO</label>
                 </div>
             </div>
         </form>
@@ -306,11 +306,11 @@
             $('.c-shares_min').html($('.shares_min').val());
             $('.c-discount').html($('.discount').val()+'%');
             $('.c-ft-type').html($('.ft-type').val());
-            $('.c-ma_days').html($('.ma_days').val());
+            $('.c-ma_days').html($('.ma_days').val() || "N/A");
             $('.c-duration').html($('.duration').val());
             $('.c-min_price').html($('.min_price').val());
-            $('.c-accept_counter_bids').html($('.input_symbol').val());
-            $('.c-accept_private_counter_offer').html($('.input_symbol').val());
+            $('.c-accept_counter_bids').html($('.accept_counter_bids:checked').val()=="true"? "YES": "NO");
+            $('.c-accept_private_counter_offer').html($('.accept_private_counter_offer:checked').val()=="true"? "YES":"NO");
             $('#confirm-modal').modal();            
         }
     });
