@@ -23,7 +23,7 @@
     <div class="col-lg-12 col-xl-10 offset-xl-1">
 
         <div class="row mt-3">
-            <h4>Issuer - Offer Shares</h4>
+            <h3>Issuer - Offer Shares</h3>
         </div>
         <div class="row mt-3 error">
             {{ form.non_field_errors }}
@@ -90,9 +90,15 @@
                 </div>
                 <div class="col">
                     {% if form.ft_type.value != 'MA' %}
-                        <input type="text" class="form-control ma_days" name="ma_days" value="N/A" min="1" max="90" required="" disabled="">
-                    {% else %}
-                        <input type="number" class="form-control ma_days" name="ma_days" value="{{ form.ma_days.value }}" min="1" max="90" required="">
+                        <select class="form-control ma_days" name="ma_days" disabled="">
+                            <option value="">N/A</option>
+                        </select>
+                    {% else %}                
+                        <select class="form-control ma_days" name="ma_days">
+                            {% for ii in range_madays %}
+                            <option value="{{ ii }}">{{ ii }} </option>
+                            {% endfor %}
+                        </select>
                     {% endif %}
                 </div>
                 <div class="col">
@@ -168,6 +174,37 @@
                 </table>
             </div>
         </div>
+
+        <div class="row mt-3">
+            <h3>List of Offers</h3>
+        </div>
+
+        <div class="row mt-3">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>SYMBOL</th>
+                            <th>SHARES OFFERED</th>
+                            <th>MIN TO BUY</th>
+                            <th>DISCOUNT</th>
+                            <th>FT TYPE</th>
+                            <th>MA DAYS</th>
+                            <th>MIN PRICE</th>
+                            <th>DURATION</th>
+                            <th>COUNTER BIDS</th>
+                            <th>PRIVATE OFFER</th>
+                            <th>DISCOUNTED PRICE</th>
+                            <th>CREATED AT</th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody class="output_body">
+                        {% include '_output.html' %}
+                    </tbody>
+                </table>
+            </div>
+        </div>        
     </div>
 </div>
 
@@ -180,17 +217,29 @@
         console.log(ft_type);
 
         if (ft_type == 'MA') {
-            $('.ma_days').attr('type', 'number');
-            $('.ma_days').attr('name', 'ma_days');
-            $('.ma_days').val(1);
+            $('.ma_days').html('<option value="5">5</option><option value="10">10</option><option value="15">15</option><option value="20">20</option><option value="25">25</option><option value="30">30</option>');
             $('.ma_days').removeAttr('disabled');
         } else {
-            $('.ma_days').attr('type', 'text');
-            $('.ma_days').attr('name', 'ma_days1');
-            $('.ma_days').val('N/A');
+            $('.ma_days').html('<option value="">N/A</option>');
             $('.ma_days').attr('disabled', true);
-        }
+        }        
     });
 
+    $("body").on('click', '.action.delete', function() {
+        var r = confirm("Are you sure to delete this offer?");
+        if (r == true) {
+            var oid = $(this).data('id');
+            $.ajax({
+                type: 'post',
+                url: '/delete_offer',
+                data: {
+                    id: oid,
+                },
+                success: function (data) {
+                    location.reload();
+                }
+            });
+        }
+    });
 </script>
 {% endblock %}

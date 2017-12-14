@@ -32,7 +32,9 @@ def i_post(request, symbol):
     return render(request, 'i_post.html', {
         'form': form,
         'range_discount': range(1, 26),
+        'range_madays': range(5, 31, 5),
         'inputs': [IssueTable.objects.get(symbol=symbol)],
+        'outputs': OfferList.objects.filter(symbol=symbol)
     })
     
 def i_posts(request, symbol):
