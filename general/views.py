@@ -8,6 +8,7 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django.views.decorators.csrf import csrf_exempt
+from django.forms.models import model_to_dict
 
 from general.models import *
 from general.forms import *
@@ -28,18 +29,44 @@ def issue_offer(request, symbol):
         'min_price': 0
     })
 
+    offers = [model_to_dict(ii) for ii in OfferList.objects.filter(symbol=symbol)]
+    for ii in offers:
+        ii['discounted_price'] = discount_price(ii)
+
+    offers = sorted(offers, key=lambda k: k['discounted_price']) 
+
     return render(request, 'issue_offer.html', {
         'form': form,
         'range_discount': range(1, 26),
         'range_madays': range(5, 31, 5),
         'ii': IssueTable.objects.get(symbol=symbol),
-        'outputs': OfferList.objects.filter(symbol=symbol)
+        'outputs': offers
     })
     
 def offer_list(request, symbol):
+    offers = [model_to_dict(ii) for ii in OfferList.objects.filter(symbol=symbol)]
+    for ii in offers:
+        ii['discounted_price'] = discount_price(ii)
+
+    offers = sorted(offers, key=lambda k: k['discounted_price']) 
+    
     return render(request, 'offer_list.html', {
-        'outputs': OfferList.objects.filter(symbol=symbol)
+        'outputs': offers
     })
+
+def discount_price(soutput):
+    if soutput['ft_type'] == 'FTS':
+        sinput = IssueTable.objects.get(symbol=soutput['symbol'])
+        discounted_price = sinput.last * (100 - soutput['discount']) / 100
+        return discounted_price
+    else:
+        ph = PriceHistory.objects.filter(symbol=soutput['symbol']).order_by('-date')[:soutput['ma_days']]
+        if ph:
+            av = 0                
+            for ii in ph:
+                av += ii.close
+            return av/soutput['ma_days']
+        return -100000000
 
 @csrf_exempt
 def delete_offer(request):
