@@ -31,7 +31,8 @@
                             <th>HIGH</th>
                             <th>LOW</th>
                             <th>VOLUME</th>
-                            <th>Max Shares Available</th>                            
+                            <th>Max Shares Available</th>   
+                            <th></th>                         
                         </tr>
                     </thead>
                     <tbody class="input_body">
@@ -40,8 +41,60 @@
                 </table>
             </div>
         </div>
+
+        <div class="row mt-5">
+            <button class="btn btn-success btn-update-all">Update All History</button>
+        </div>        
     </div>
 </div>
 
 {% endblock %}
 
+{% block js %}
+<script>
+    $("body").on('click', '.btn-update-all', function() {
+        $.ajax({
+            type: 'post',
+            url: '/update_history_all',
+            data: {},
+            success: function (data) {
+                alert('History updated successfully!');
+                location.reload();
+            }
+        });
+    }); 
+
+    $("body").on('click', '.btn-update', function() {
+        $.ajax({
+            type: 'post',
+            url: '/update_history',
+            data: {
+                symbol: $(this).data('symbol'),
+            },
+            success: function (data) {
+                alert('History updated successfully!');
+                location.reload();
+            }
+        });
+    });    
+
+    $("body").on('click', '.btn-delete', function() {
+        var r = confirm("Are you sure to delete history?");
+        if (r == true) {
+            $.ajax({
+                type: 'post',
+                url: '/delete_history',
+                data: {
+                    symbol: $(this).data('symbol'),
+                },
+                success: function (data) {
+                    alert('History deleted successfully!');
+                    location.reload();
+                }
+            });
+        }
+    });    
+
+
+</script>
+{% endblock %}
