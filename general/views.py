@@ -77,6 +77,7 @@ def _update_history(symbol):
     except Exception as e:
         print e, '######### no file '
 
+@csrf_exempt
 def update_history_all(request):
     for ii in IssueTable.objects.all():
         _update_history(ii.symbol)

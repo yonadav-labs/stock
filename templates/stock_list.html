@@ -48,16 +48,44 @@
     </div>
 </div>
 
+<!-- The Modal -->
+<div class="modal fade" id="loading-modal">
+  <div class="modal-dialog" style="top: 200px;">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4>Loading...</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">        
+        <div class="row">
+            <img src="/static/img/loading.gif" style="width: 116px; margin: 15px auto;">
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 {% block js %}
 <script>
     $("body").on('click', '.btn-update-all', function() {
+        $('#loading-modal').modal();
         $.ajax({
             type: 'post',
             url: '/update_history_all',
             data: {},
             success: function (data) {
+                $('#loading-modal').modal('hide');
                 alert('History updated successfully!');
                 location.reload();
             }
@@ -72,6 +100,7 @@
                 symbol: $(this).data('symbol'),
             },
             success: function (data) {
+                $('#loading-modal').modal('hide');
                 alert('History updated successfully!');
                 location.reload();
             }
@@ -81,6 +110,7 @@
     $("body").on('click', '.btn-delete', function() {
         var r = confirm("Are you sure to delete history?");
         if (r == true) {
+            $('#loading-modal').modal();
             $.ajax({
                 type: 'post',
                 url: '/delete_history',
