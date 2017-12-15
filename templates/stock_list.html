@@ -93,6 +93,7 @@
     }); 
 
     $("body").on('click', '.btn-update', function() {
+        $('#loading-modal').modal();
         $.ajax({
             type: 'post',
             url: '/update_history',
@@ -110,7 +111,6 @@
     $("body").on('click', '.btn-delete', function() {
         var r = confirm("Are you sure to delete history?");
         if (r == true) {
-            $('#loading-modal').modal();
             $.ajax({
                 type: 'post',
                 url: '/delete_history',
