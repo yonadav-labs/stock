@@ -29,12 +29,14 @@ def issue_offer(request, symbol):
         'min_price': 0
     })
 
-    offers = [model_to_dict(ii) for ii in OfferList.objects.filter(symbol=symbol)]
-    for ii in offers:
-        ii['discounted_price'] = discount_price(ii)
+    offers = []
+    for ii in OfferList.objects.filter(symbol=symbol):
+        offer = model_to_dict(ii)
+        offer['timestamp'] = ii.timestamp.strftime("%Y-%m-%d %H:%M:%S")
+        offer['discounted_price'] = discount_price(offer)
+        offers.append(offer)
 
     offers = sorted(offers, key=lambda k: k['discounted_price']) 
-
     return render(request, 'issue_offer.html', {
         'form': form,
         'range_discount': range(1, 26),
@@ -44,9 +46,12 @@ def issue_offer(request, symbol):
     })
     
 def offer_list(request, symbol):
-    offers = [model_to_dict(ii) for ii in OfferList.objects.filter(symbol=symbol)]
-    for ii in offers:
-        ii['discounted_price'] = discount_price(ii)
+    offers = []
+    for ii in OfferList.objects.filter(symbol=symbol):
+        offer = model_to_dict(ii)
+        offer['timestamp'] = ii.timestamp.strftime("%Y-%m-%d %H:%M:%S")
+        offer['discounted_price'] = discount_price(offer)
+        offers.append(offer)
 
     offers = sorted(offers, key=lambda k: k['discounted_price']) 
     
