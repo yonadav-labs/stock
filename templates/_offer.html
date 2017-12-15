@@ -1,3 +1,4 @@
+{% load humanize %}
 {% load extra %} 
 
 {% if outputs %}
@@ -13,7 +14,7 @@
             <td>{{ ii.duration }}</td>
             <td>{% if ii.accept_counter_bids %} YES {% else %} NO {% endif %}</td>
             <td>{% if ii.accept_private_counter_offer %} YES {% else %} NO {% endif %}</td>
-            <td>{% if ii.discounted_price < 0 %}-{% else %} {{ ii.discounted_price }}{% endif %}</td>
+            <td>{% if ii.discounted_price < 0 %}-{% else %} {{ ii.discounted_price|floatformat:2 }}{% endif %}</td>
             <td>{{ ii.timestamp|date:"Y-m-d H:i:s" }}</td>
             <td class="action delete" data-id="{{ ii.id }}">
                 <i class="fa fa-remove" style="font-size:24px; cursor: pointer;"></i>
