@@ -79,10 +79,10 @@
                     <input type="hidden" name="action" value="SELL">
                 </div>
                 <div class="col">
-                    <input type="number" name="shares_max" value='{% if form.shares_max.value %}{{ form.shares_max.value }}{% endif %}' class="form-control shares_max" required="" max="{{ ii.num_shares_available }}">
+                    <input type="number" name="shares_max" value='{% if form.shares_max.value %}{{ form.shares_max.value }}{% endif %}' class="form-control shares_max" required="" max="{{ ii.num_shares_available }}" min="0">
                 </div>
                 <div class="col">
-                    <input type="number" name="shares_min" value='{% if form.shares_min.value %}{{ form.shares_min.value }}{% endif %}' class="form-control shares_min" required="">
+                    <input type="number" name="shares_min" value='{% if form.shares_min.value %}{{ form.shares_min.value }}{% endif %}' class="form-control shares_min" required="" min="0">
                 </div>
                 <div class="col">
                     <select class="form-control discount" name="discount">
@@ -240,15 +240,15 @@
       <!-- Modal body -->
       <div class="modal-body">        
         <div class="row"><label class="col">Symbol: </label><span class="c-symbol col"></span></div>
-        <div><label>SHARES OFFERED: </label><span class="c-shares_max"></span></div>
-        <div><label>MIN TO BUY: </label><span class="c-shares_min"></span></div>
-        <div><label>DISCOUNT: </label><span class="c-discount"></span></div>
-        <div><label>TYPE: </label><span class="c-ft-type"></span></div>
-        <div><label>MA DAYS : </label><span class="c-ma_days"></span></div>
-        <div><label>MIN PRICE : </label><span class="c-min_price"></span></div>
-        <div><label>DURATION: </label><span class="c-duration"></span></div>
-        <div><label>ACCEPT COUNTER BIDS? : </label><span class="c-accept_counter_bids"></span></div>
-        <div><label>ACCEPT PRIVATE COUNTER OFFER? : </label><span class="c-accept_private_counter_offer"></span></div>
+        <div class="row"><label class="col">SHARES OFFERED: </label><span class="c-shares_max col"></span></div>
+        <div class="row"><label class="col">MIN TO BUY: </label><span class="c-shares_min col"></span></div>
+        <div class="row"><label class="col">DISCOUNT: </label><span class="c-discount col"></span></div>
+        <div class="row"><label class="col">TYPE: </label><span class="c-ft-type col"></span></div>
+        <div class="row"><label class="col">MA DAYS : </label><span class="c-ma_days col"></span></div>
+        <div class="row"><label class="col">MIN PRICE : </label><span class="c-min_price col"></span></div>
+        <div class="row"><label class="col">DURATION: </label><span class="c-duration col"></span></div>
+        <div class="row"><label class="col">ACCEPT COUNTER BIDS? : </label><span class="c-accept_counter_bids col"></span></div>
+        <div class="row"><label class="col">ACCEPT PRIVATE COUNTER OFFER? : </label><span class="c-accept_private_counter_offer col"></span></div>
       </div>
 
       <!-- Modal footer -->
