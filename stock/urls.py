@@ -25,6 +25,9 @@ urlpatterns = [
     url(r'^$', home, name="home"),
     url(r'^issue_offer/(?P<symbol>.*)', issue_offer, name="issue_offer"),
     url(r'^delete_offer$', delete_offer, name="delete_offer"),
-    url(r'^import_pricehistory', import_pricehistory, name="import_pricehistory"),
     url(r'^offer_list/(?P<symbol>.*)', offer_list, name="offer_list"),
+
+    url(r'^update_history_all$', update_history_all, name="update_history_all"),
+    url(r'^update_history$', update_history, name="update_history"),
+    url(r'^delete_history$', delete_history, name="delete_history"),
 ]

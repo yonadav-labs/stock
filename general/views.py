@@ -47,23 +47,38 @@ def delete_offer(request):
     OfferList.objects.filter(id=oid).delete()
     return HttpResponse('')
 
-def import_pricehistory(request):
-    for ii in IssueTable.objects.all():
-        path = '/root/work/stock/data/{}.csv'.format(ii.symbol.upper())
-        try:
-            with open(path) as csvfile:
-                reader = csv.DictReader(csvfile)
-                for row in reader:
-                    try:
-                        PriceHistory.objects.get_or_create(symbol=ii.symbol,
-                                                           open=row['Open'],
-                                                           high=row['High'],
-                                                           low=row['Low'],
-                                                           close=row['Close'],
-                                                           date=row['Date'])
-                    except Exception as e:
-                        print e
-        except Exception as e:
-            print e, '######### no file '
+@csrf_exempt
+def delete_history(request):
+    symbol = request.POST.get('symbol')
+    PriceHistory.objects.filter(symbol=symbol).delete()
+    return HttpResponse('')
 
-    return HttpResponse('Successfully Imported')
+@csrf_exempt
+def update_history(request):
+    symbol = request.POST.get('symbol')
+    _update_history(symbol)
+    return HttpResponse('')
+
+def _update_history(symbol):
+    path = '/root/work/stock/data/{}.csv'.format(symbol.upper())
+    try:
+        with open(path) as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                try:
+                    PriceHistory.objects.get_or_create(symbol=symbol,
+                                                       open=row['Open'],
+                                                       high=row['High'],
+                                                       low=row['Low'],
+                                                       close=row['Close'],
+                                                       date=row['Date'])
+                except Exception as e:
+                    print e
+    except Exception as e:
+        print e, '######### no file '
+
+def update_history_all(request):
+    for ii in IssueTable.objects.all():
+        _update_history(ii.symbol)
+
+    return HttpResponse('')
