@@ -35,7 +35,7 @@
                         </tr>
                     </thead>
                     <tbody class="input_body">
-                        {% include '_input.html' %}
+                        {% include '_issue.html' %}
                     </tbody>
                 </table>
             </div>
@@ -45,13 +45,3 @@
 
 {% endblock %}
 
-{% block js %}
-<script type="text/javascript">
-/*
-    jQuery("body").on('click', '.input_body tr', function() {
-        var symbol = $(this).data('symbol');
-        location.href = '/i_post/' + symbol;
-    });
-*/
-</script>
-{% endblock %}

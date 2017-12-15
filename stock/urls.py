@@ -23,8 +23,8 @@ admin.site.site_header = "Stock Administration"
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', home, name="home"),
-    url(r'^i_post/(?P<symbol>.*)', i_post, name="i_post"),
-    url(r'^i_posts/(?P<symbol>.*)', i_posts, name="i_posts"),
+    url(r'^issue_offer/(?P<symbol>.*)', issue_offer, name="issue_offer"),
     url(r'^delete_offer$', delete_offer, name="delete_offer"),
     url(r'^import_pricehistory', import_pricehistory, name="import_pricehistory"),
+    url(r'^offer_list/(?P<symbol>.*)', offer_list, name="offer_list"),
 ]

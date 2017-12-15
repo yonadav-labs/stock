@@ -13,14 +13,13 @@ from general.models import *
 from general.forms import *
 
 def home(request):
-    return render(request, 'i_table.html', {
+    return render(request, 'stock_list.html', {
         'inputs': IssueTable.objects.all()
     })
 
-def i_post(request, symbol):
+def issue_offer(request, symbol):
     if request.method == 'POST':
         form = OutputForm(request.POST)
-        print '#######'
         if form.is_valid():
             form.save()
 
@@ -29,7 +28,7 @@ def i_post(request, symbol):
         'min_price': 0
     })
 
-    return render(request, 'i_post.html', {
+    return render(request, 'issue_offer.html', {
         'form': form,
         'range_discount': range(1, 26),
         'range_madays': range(5, 31, 5),
@@ -37,8 +36,8 @@ def i_post(request, symbol):
         'outputs': OfferList.objects.filter(symbol=symbol)
     })
     
-def i_posts(request, symbol):
-    return render(request, 'i_posts.html', {
+def offer_list(request, symbol):
+    return render(request, 'offer_list.html', {
         'outputs': OfferList.objects.filter(symbol=symbol)
     })
 

@@ -4,9 +4,9 @@
 {% if inputs %}
   {% for ii in inputs %}
     <tr data-symbol="{{ ii.symbol }}">
-      <td><a href="/i_post/{{ ii.symbol }}">{{ ii.symbol }}</a></td>
-      <th><a href="/i_post/{{ ii.symbol }}" class="btn btn-success">Offer</a></th>
-      <td><a href="/i_posts/{{ ii.symbol }}">{{ ii.symbol|count_offers }}</a></td>
+      <td><a href="/issue_offer/{{ ii.symbol }}">{{ ii.symbol }}</a></td>
+      <th><a href="/issue_offer/{{ ii.symbol }}" class="btn btn-success">Offer</a></th>
+      <td><a href="/offer_list/{{ ii.symbol }}">{{ ii.symbol|count_offers }}</a></td>
       <td>{{ ii.symbol|last_close }}</td>
       <td>{{ ii|percent_change }}</td>
       <td>{{ ii.bid }}</td>
