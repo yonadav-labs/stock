@@ -78,15 +78,17 @@
 
 {% block js %}
 <script>
+    var reload = null;
     $("body").on('click', '.btn-update-all', function() {
-        // $('#loading-modal').modal();
+        clearInterval(reload);
+        reload = null;
         $.ajax({
             type: 'post',
             url: '/run_scraper',
             data: {},
             success: function (data) {
-                // $('#loading-modal').modal('hide');
                 alert('Spider triggered successfully!');
+                startReload();
             }
         });
     }); 
@@ -108,8 +110,13 @@
         }
     });    
 
-    setInterval(function() {
-        location.reload();
-    }, 5000);
+    function startReload() {
+        if (reload != null) return;
+        reload = setInterval(function() {
+            location.reload();
+        }, 5000);        
+    }
+
+    startReload();
 </script>
 {% endblock %}
