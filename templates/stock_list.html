@@ -94,6 +94,8 @@
     }); 
 
     $("body").on('click', '.btn-delete', function() {
+        clearInterval(reload);
+        reload = null;
         var r = confirm("Are you sure to delete history?");
         if (r == true) {
             $.ajax({
@@ -104,9 +106,11 @@
                 },
                 success: function (data) {
                     alert('History deleted successfully!');
-                    location.reload();
+                    startReload();
                 }
             });
+        } else {
+            startReload();
         }
     });    
 
