@@ -32,15 +32,20 @@ def get_history(issue):
     
     trs = tree.xpath('//*[@data-test="historical-prices"]/tbody/tr')
     for tr in trs:
-        _, created = PriceHistory.objects.get_or_create(symbol=issue.symbol,
-                                                        open=tr.xpath('./td[2]/span/text()')[0],
-                                                        high=tr.xpath('./td[3]/span/text()')[0],
-                                                        low=tr.xpath('./td[4]/span/text()')[0],
-                                                        close=tr.xpath('./td[5]/span/text()')[0],
-                                                        date=datetime.strptime(tr.xpath('./td[1]/span/text()')[0], '%b %d, %Y').strftime('%Y-%m-%d'))
+        defaults = {
+            'symbol' : issue.symbol,
+            'open' : tr.xpath('./td[2]/span/text()')[0],
+            'high' : tr.xpath('./td[3]/span/text()')[0],
+            'low' : tr.xpath('./td[4]/span/text()')[0],
+            'close' : tr.xpath('./td[5]/span/text()')[0],
+            'date' : datetime.strptime(tr.xpath('./td[1]/span/text()')[0], '%b %d, %Y').strftime('%Y-%m-%d')        
+        }
 
-        if not created:
+        if PriceHistory.objects.filter(**defaults):
             break
+
+        PriceHistory.objects.update_or_create(symbol=issue.symbol, date=defaults['date'], defaults=defaults)
+
 
 if __name__ == '__main__':
     for ii in IssueTable.objects.all():

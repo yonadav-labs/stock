@@ -10,7 +10,7 @@ register = template.Library()
 def percent_change(sinput):
     ph = PriceHistory.objects.filter(symbol=sinput.symbol).order_by('-date')
     if ph:
-        change = sinput.last - ph[0].close
+        change = sinput.last - ph[1].close
         percent = change * 100 / sinput.last
         return '{0}({1:.2f}%)'.format(change, percent)
     return '-'
