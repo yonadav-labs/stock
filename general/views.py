@@ -15,7 +15,6 @@ from general.models import *
 from general.forms import *
 
 def home(request):
-    print settings.BASE_DIR
     return render(request, 'stock_list.html', {
         'inputs': IssueTable.objects.all()
     })
@@ -87,6 +86,8 @@ def delete_history(request):
     PriceHistory.objects.filter(symbol=symbol).delete()
     return HttpResponse('')
 
+@csrf_exempt
 def run_scraper(request):
     path = settings.BASE_DIR + '/general/get_data.py'
     subprocess.Popen(["python", path])
+    return HttpResponse('')

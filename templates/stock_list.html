@@ -78,6 +78,19 @@
 
 {% block js %}
 <script>
+    $("body").on('click', '.btn-update-all', function() {
+        // $('#loading-modal').modal();
+        $.ajax({
+            type: 'post',
+            url: '/run_scraper',
+            data: {},
+            success: function (data) {
+                // $('#loading-modal').modal('hide');
+                alert('Spider triggered successfully!');
+            }
+        });
+    }); 
+
     $("body").on('click', '.btn-delete', function() {
         var r = confirm("Are you sure to delete history?");
         if (r == true) {
