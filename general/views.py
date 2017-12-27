@@ -70,7 +70,7 @@ def discount_price(soutput):
             av = 0                
             for ii in ph:
                 av += ii.close
-            return av/soutput['ma_days']
+            return av / ph.count()
         return -100000000
 
 @csrf_exempt
