@@ -85,33 +85,3 @@ def delete_history(request):
     PriceHistory.objects.filter(symbol=symbol).delete()
     return HttpResponse('')
 
-@csrf_exempt
-def update_history(request):
-    symbol = request.POST.get('symbol')
-    _update_history(symbol)
-    return HttpResponse('')
-
-def _update_history(symbol):
-    path = '/root/work/stock/data/{}.csv'.format(symbol.upper())
-    try:
-        with open(path) as csvfile:
-            reader = csv.DictReader(csvfile)
-            for row in reader:
-                try:
-                    PriceHistory.objects.get_or_create(symbol=symbol,
-                                                       open=row['Open'],
-                                                       high=row['High'],
-                                                       low=row['Low'],
-                                                       close=row['Close'],
-                                                       date=row['Date'])
-                except Exception as e:
-                    print e
-    except Exception as e:
-        print e, '######### no file '
-
-@csrf_exempt
-def update_history_all(request):
-    for ii in IssueTable.objects.all():
-        _update_history(ii.symbol)
-
-    return HttpResponse('')

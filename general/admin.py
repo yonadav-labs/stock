@@ -13,7 +13,7 @@ class OutPutAdmin(admin.ModelAdmin):
         return obj.timestamp.strftime("%Y-%m-%d %H:%M:%S")
 
 class PriceHistoryAdmin(admin.ModelAdmin):
-    list_display = ['symbol', 'close', 'open', 'high', 'low', 'date']
+    list_display = ['symbol', 'open', 'high', 'low', 'close', 'date']
     search_fields = ['symbol']    
     
 admin.site.register(IssueTable)
