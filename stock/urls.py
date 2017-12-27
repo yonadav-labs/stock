@@ -26,6 +26,6 @@ urlpatterns = [
     url(r'^issue_offer/(?P<symbol>.*)', issue_offer, name="issue_offer"),
     url(r'^delete_offer$', delete_offer, name="delete_offer"),
     url(r'^offer_list/(?P<symbol>.*)', offer_list, name="offer_list"),
-
+    url(r'^run_scraper$', run_scraper, name="run_scraper"),
     url(r'^delete_history$', delete_history, name="delete_history"),
 ]

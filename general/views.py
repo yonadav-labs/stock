@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import csv
+import subprocess
 
 from django.shortcuts import render
+from django.conf import settings
 from django.http import JsonResponse
 from django.http import HttpResponse
 from django.template.loader import render_to_string
@@ -14,6 +15,7 @@ from general.models import *
 from general.forms import *
 
 def home(request):
+    print settings.BASE_DIR
     return render(request, 'stock_list.html', {
         'inputs': IssueTable.objects.all()
     })
@@ -85,3 +87,6 @@ def delete_history(request):
     PriceHistory.objects.filter(symbol=symbol).delete()
     return HttpResponse('')
 
+def run_scraper(request):
+    path = settings.BASE_DIR + '/general/get_data.py'
+    subprocess.Popen(["python", path])
