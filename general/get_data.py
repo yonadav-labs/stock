@@ -1,6 +1,7 @@
 import os
 import django
 import urllib2
+import pdb
 
 from lxml import html
 from os import sys, path
@@ -17,10 +18,11 @@ def get_issue(issue):
     content = urllib2.urlopen(url).read()
     tree = html.fromstring(content)
 
-    issue.last = tree.xpath('//*[@id="quote-summary"]/div[1]/table/tbody/tr[1]/td[2]/span/text()')[0]
-    issue.bid = tree.xpath('//*[@id="quote-summary"]/div[1]/table/tbody/tr[3]/td[2]/text()')[0].split(' ')[0]
-    issue.ask = tree.xpath('//*[@id="quote-summary"]/div[1]/table/tbody/tr[4]/td[2]/text()')[0].split(' ')[0]
-    issue.volume = tree.xpath('//*[@id="quote-summary"]/div[1]/table/tbody/tr[7]/td[2]/span/text()')[0].replace(',', '')
+    # pdb.set_trace()
+    issue.last = tree.xpath('//*[@id="quote-header-info"]/div[3]/div/span/text()')[0]
+    issue.bid = tree.xpath('//*[@id="quote-summary"]/div[1]/table/tbody/tr[3]/td[2]/*/text()')[0].split(' ')[0]
+    issue.ask = tree.xpath('//*[@id="quote-summary"]/div[1]/table/tbody/tr[4]/td[2]/*/text()')[0].split(' ')[0]
+    issue.volume = tree.xpath('//*[@id="quote-summary"]/div[1]/table/tbody/tr[7]/td[2]/*/text()')[0].replace(',', '')
     issue.save()
 
 def get_history(issue):
@@ -42,5 +44,6 @@ def get_history(issue):
 
 if __name__ == '__main__':
     for ii in IssueTable.objects.all():
+        print ii.symbol
         get_issue(ii)
         get_history(ii)

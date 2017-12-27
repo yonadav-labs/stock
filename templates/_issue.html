@@ -7,7 +7,7 @@
       <td><a href="/issue_offer/{{ ii.symbol }}">{{ ii.symbol }}</a></td>
       <td><a href="/issue_offer/{{ ii.symbol }}" class="btn btn-success">Offer</a></td>
       <td><a href="/offer_list/{{ ii.symbol }}">{{ ii.symbol|count_offers }}</a></td>
-      <td>{{ ii.symbol|last_close }}</td>
+      <td>{{ ii.last }}</td>
       <td>{{ ii|percent_change }}</td>
       <td>{{ ii.bid }}</td>
       <td>{{ ii.ask }}</td>
