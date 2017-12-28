@@ -34,7 +34,7 @@ class PriceHistoryAdmin(admin.ModelAdmin):
         fields = [f.name for f in PriceHistory._meta.get_fields() 
                   if f.name not in ['id', 'is_new']]
 
-        path = datetime.datetime.now().strftime("/tmp/.price_history_%Y_%m_%d_%H_%M_%S.csv")
+        path = datetime.datetime.now().strftime("/tmp/.{}_price_history_%Y_%m_%d_%H_%M_%S.csv".format(queryset[0].symbol))
         self.write_report(queryset, path, fields)
         wrapper = FileWrapper( open( path, "r" ) )
         content_type = mimetypes.guess_type( path )[0]
@@ -54,7 +54,6 @@ class PriceHistoryAdmin(admin.ModelAdmin):
         for product in queryset:
             product_ = model_to_dict(product, fields=result_csv_fields)
             for key, val in product_.items():
-                # print type(val), '########'
                 if type(val) not in (float, int, long, bool, datetime.date) and val:
                     product_[key] = val.encode('utf-8')
                 elif type(val) == datetime.date:
