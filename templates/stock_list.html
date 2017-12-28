@@ -43,7 +43,8 @@
         </div>
 
         <div class="row mt-5">
-            <button class="btn btn-success btn-update-all">Update All History</button>
+            <button class="btn btn-success btn-update-value">Update Last Values</button>
+            <button class="btn btn-success btn-download-history ml-3">Download Histories</button>
         </div>        
     </div>
 </div>
@@ -79,15 +80,30 @@
 {% block js %}
 <script>
     var reload = null;
-    $("body").on('click', '.btn-update-all', function() {
+
+    $("body").on('click', '.btn-update-value', function() {
         clearInterval(reload);
         reload = null;
         $.ajax({
             type: 'post',
-            url: '/run_scraper',
+            url: '/run_scraper_value',
             data: {},
             success: function (data) {
-                alert('Spider triggered successfully!');
+                alert('Spider for last values triggered successfully!');
+                startReload();
+            }
+        });
+    }); 
+
+    $("body").on('click', '.btn-download-history', function() {
+        clearInterval(reload);
+        reload = null;
+        $.ajax({
+            type: 'post',
+            url: '/run_scraper_history',
+            data: {},
+            success: function (data) {
+                alert('Spider for histories triggered successfully!');
                 startReload();
             }
         });

@@ -87,7 +87,13 @@ def delete_history(request):
     return HttpResponse('')
 
 @csrf_exempt
-def run_scraper(request):
+def run_scraper_value(request):
     path = settings.BASE_DIR + '/general/get_data.py'
-    subprocess.Popen(["python", path])
+    subprocess.Popen(["python", path, "value"])
+    return HttpResponse('')
+
+@csrf_exempt
+def run_scraper_history(request):
+    path = settings.BASE_DIR + '/general/get_data.py'
+    subprocess.Popen(["python", path, "history"])
     return HttpResponse('')

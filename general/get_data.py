@@ -1,4 +1,5 @@
 import os
+import sys
 import django
 import urllib2
 import pdb
@@ -51,7 +52,11 @@ def get_history(issue):
 
 
 if __name__ == '__main__':
-    for ii in IssueTable.objects.all():
-        print ii.symbol
-        get_issue(ii)
-        get_history(ii)
+    if sys.argv[1] == 'value':
+        for ii in IssueTable.objects.all():
+            print ii.symbol
+            get_issue(ii)
+    elif sys.argv[1] == 'history':
+        for ii in IssueTable.objects.all():
+            print ii.symbol
+            get_history(ii)
