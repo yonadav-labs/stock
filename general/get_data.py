@@ -14,16 +14,19 @@ django.setup()
 from general.models import *
 
 def get_issue(issue):
+
     url = 'https://finance.yahoo.com/quote/{}/'.format(issue.symbol.upper())
     content = urllib2.urlopen(url).read()
     tree = html.fromstring(content)
-
-    # pdb.set_trace()
-    issue.last = tree.xpath('//*[@id="quote-header-info"]/div[3]/div/span/text()')[0]
-    issue.bid = tree.xpath('//*[@id="quote-summary"]/div[1]/table/tbody/tr[3]/td[2]/*/text()')[0].split(' ')[0]
-    issue.ask = tree.xpath('//*[@id="quote-summary"]/div[1]/table/tbody/tr[4]/td[2]/*/text()')[0].split(' ')[0]
-    issue.volume = tree.xpath('//*[@id="quote-summary"]/div[1]/table/tbody/tr[7]/td[2]/*/text()')[0].replace(',', '')
-    issue.save()
+    try:
+        issue.last = tree.xpath('//*[@id="quote-header-info"]/div[3]/div/span/text()')[0]
+        issue.bid = (tree.xpath('//*[@id="quote-summary"]/div[1]/table/tbody/tr[3]/td[2]/*/text()') or tree.xpath('//*[@id="quote-summary"]/div[1]/table/tbody/tr[3]/td[2]/text()'))[0].split(' ')[0]
+        issue.ask = (tree.xpath('//*[@id="quote-summary"]/div[1]/table/tbody/tr[4]/td[2]/*/text()') or tree.xpath('//*[@id="quote-summary"]/div[1]/table/tbody/tr[4]/td[2]/text()'))[0].split(' ')[0]
+        issue.volume = tree.xpath('//*[@id="quote-summary"]/div[1]/table/tbody/tr[7]/td[2]/*/text()')[0].replace(',', '')
+        issue.save()
+    except Exception as e:
+        # pdb.set_trace()
+        print e, '@@@@@@@@@@@@@@@@@@@@'
 
 def get_history(issue):
     url = 'https://finance.yahoo.com/quote/{}/history'.format(issue.symbol.upper())
