@@ -52,11 +52,8 @@ def get_history(issue):
 
 
 if __name__ == '__main__':
-    if sys.argv[1] == 'value':
-        for ii in IssueTable.objects.all():
-            print ii.symbol
-            get_issue(ii)
-    elif sys.argv[1] == 'history':
-        for ii in IssueTable.objects.all():
-            print ii.symbol
+    for ii in IssueTable.objects.all():
+        print ii.symbol
+        get_issue(ii)
+        if sys.argv[1] == 'history':
             get_history(ii)

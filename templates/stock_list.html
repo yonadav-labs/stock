@@ -13,7 +13,7 @@
 <div class="container-fluid">
     <div class="col-lg-12 col-xl-10 offset-xl-1">
         <div class="row mt-3">
-            <h3>List of Stocks</h3>
+            <h3>List of Stocks ({% now "Y-m-d H:i:s" %})</h3>
         </div>
 
         <div class="row mt-3">
@@ -24,6 +24,7 @@
                             <th>SYMBOL</th>
                             <th>Offer Shares</th>
                             <th># of Offers</th>
+                            <th>ELAPSED TIME</th>
                             <th>LAST</th>
                             <th>CHANGE</th>
                             <th>BID</th>
@@ -32,7 +33,7 @@
                             <th>LOW</th>
                             <th>VOLUME</th>
                             <th>Max Shares Available</th>   
-                            <th></th>                         
+                            <th>DELETE OFFER</th>                         
                         </tr>
                     </thead>
                     <tbody class="input_body">
@@ -43,7 +44,7 @@
         </div>
 
         <div class="row mt-5">
-            <button class="btn btn-success btn-update-value">Update Last Values</button>
+            <button class="btn btn-success btn-update-value">Update Prices</button>
             <button class="btn btn-success btn-download-history ml-3">Download Histories</button>
         </div>        
     </div>

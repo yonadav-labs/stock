@@ -19,3 +19,6 @@ def percent_change(sinput):
 def count_offers(symbol):
     return OfferList.objects.filter(symbol=symbol).count()
 
+@register.filter
+def elapsed_time(issue):
+    return datetime.datetime.now().replace(microsecond=0) - issue.updated_at.replace(tzinfo=None).replace(microsecond=0)

@@ -6,14 +6,15 @@ from django.db import models
 
 class IssueTable(models.Model):
     symbol = models.CharField(max_length=100, primary_key=True)
-    num_shares_available = models.IntegerField()
-    last = models.FloatField()
-    change = models.FloatField()
-    bid = models.FloatField()
-    ask = models.FloatField()
-    high = models.FloatField()
-    low = models.FloatField()
-    volume = models.IntegerField()
+    num_shares_available = models.IntegerField(default=0)
+    last = models.FloatField(default=0)
+    change = models.FloatField(default=0)
+    bid = models.FloatField(default=0)
+    ask = models.FloatField(default=0)
+    high = models.FloatField(default=0)
+    low = models.FloatField(default=0)
+    volume = models.IntegerField(default=0)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.symbol
