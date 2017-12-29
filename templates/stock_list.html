@@ -46,7 +46,10 @@
         <div class="row mt-5">
             <button class="btn btn-success btn-update-value">Update Prices</button>
             <button class="btn btn-success btn-download-history ml-3">Download Histories</button>
-        </div>        
+        </div>     
+        <div class="row mt-5">   
+            <h4 class="message"></h4>
+        </div>
     </div>
 </div>
 
@@ -90,7 +93,7 @@
             url: '/run_scraper_value',
             data: {},
             success: function (data) {
-                alert('Spider for last values triggered successfully!');
+                $('.message').html('Spider for prices triggered successfully. You will see updated prices in a seconds.');
                 startReload();
             }
         });
@@ -104,7 +107,7 @@
             url: '/run_scraper_history',
             data: {},
             success: function (data) {
-                alert('Spider for histories triggered successfully!');
+                $('.message').html('Spider for histories triggered successfully. You will see updated prices in a seconds.');
                 startReload();
             }
         });

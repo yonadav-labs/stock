@@ -22,6 +22,7 @@
     select {
         height: 34px !important;
     }
+
 </style>
 {% endblock %}
 
@@ -124,7 +125,6 @@
             <div class="row mt-5">
                 <div class="col-md-3">
                     <input type="submit" value="Submit" class="btn btn-success btn-submit">
-                    <a class="btn btn-success" href="{{ request.path }}">Refresh</a>
                 </div>
 
                 <div class="col-md-3">
@@ -158,6 +158,12 @@
             </div>
         </form>
 
+        <hr />
+        <div class="row mt-2">
+            <div class="col-md-2">
+                <a class="btn btn-success" href="{{ request.path }}">Refresh</a>
+            </div>
+        </div>
         <div class="row mt-4">
             <h5>FREE TRADING QUOTE</h5>
         </div>
