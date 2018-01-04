@@ -15,7 +15,8 @@ from general.models import *
 from general.forms import *
 
 def home(request):
-    return render(request, 'stock_list.html', {
+    template = '_stock_list.html' if request.is_ajax() else 'stock_list.html'
+    return render(request, template, {
         'inputs': IssueTable.objects.all()
     })
 
@@ -56,7 +57,8 @@ def offer_list(request, symbol):
 
     offers = sorted(offers, key=lambda k: k['discounted_price']) 
     
-    return render(request, 'offer_list.html', {
+    template = '_offer.html' if request.is_ajax() else 'offer_list.html'
+    return render(request, template, {
         'outputs': offers
     })
 

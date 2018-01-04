@@ -58,7 +58,13 @@
     });
 
     setInterval(function() {
-        location.reload();
+        $.ajax({
+            type: 'get',
+            url: '{{ request.path }}',
+            success: function (data) {
+                $('.output_body').html(data);
+            }
+        });
     }, 5000);      
 </script>
 {% endblock %}
