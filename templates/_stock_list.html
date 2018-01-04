@@ -1,0 +1,38 @@
+        <div class="row mt-3">
+            <h3>List of Stocks ({% now "Y-m-d H:i:s" %})</h3>
+        </div>
+
+        <div class="row mt-3">
+            <div class="table-responsive table-striped">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>SYMBOL</th>
+                            <th>Offer Shares</th>
+                            <th># of Offers</th>
+                            <th>ELAPSED TIME</th>
+                            <th>LAST</th>
+                            <th>CHANGE</th>
+                            <th>BID</th>
+                            <th>ASK</th>
+                            <th>HIGH</th>
+                            <th>LOW</th>
+                            <th>VOLUME</th>
+                            <th>Max Shares Available</th>   
+                            <th>DELETE OFFER</th>                         
+                        </tr>
+                    </thead>
+                    <tbody class="input_body">
+                        {% include '_issue.html' %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <button class="btn btn-success btn-update-value">Update Prices</button>
+            <button class="btn btn-success btn-download-history ml-3">Download Histories</button>
+        </div>     
+        <div class="row mt-5">   
+            <h4 class="message"></h4>
+        </div>
