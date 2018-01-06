@@ -73,7 +73,7 @@ def discount_price(soutput):
             av = 0                
             for ii in ph:
                 av += ii.close
-            return av / ph.count()
+            return av / ph.count() * (100 - soutput['discount']) / 100
         return -100000000
 
 @csrf_exempt
