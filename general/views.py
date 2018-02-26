@@ -14,6 +14,9 @@ from django.forms.models import model_to_dict
 from general.models import *
 from general.forms import *
 
+def login(request):
+    return render(request, 'login.html')
+    
 def home(request):
     template = '_stock_list.html' if request.is_ajax() else 'stock_list.html'
     return render(request, template, {
